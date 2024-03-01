@@ -14,6 +14,7 @@
 		D9152FF22B82AD5A00BBD8FC /* SleepyTimeAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FF12B82AD5A00BBD8FC /* SleepyTimeAppTests.swift */; };
 		D9152FFC2B82AD5A00BBD8FC /* SleepyTimeAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FFB2B82AD5A00BBD8FC /* SleepyTimeAppUITests.swift */; };
 		D9152FFE2B82AD5A00BBD8FC /* SleepyTimeAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FFD2B82AD5A00BBD8FC /* SleepyTimeAppUITestsLaunchTests.swift */; };
+		D9E84E2E2B924C8C006591B6 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E84E2D2B924C8C006591B6 /* SplashScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		D9152FF72B82AD5A00BBD8FC /* SleepyTimeAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SleepyTimeAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9152FFB2B82AD5A00BBD8FC /* SleepyTimeAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepyTimeAppUITests.swift; sourceTree = "<group>"; };
 		D9152FFD2B82AD5A00BBD8FC /* SleepyTimeAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepyTimeAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D9E84E2D2B924C8C006591B6 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			children = (
 				D9152FE02B82AD5600BBD8FC /* SleepyTimeAppApp.swift */,
 				D9152FE22B82AD5600BBD8FC /* ContentView.swift */,
+				D9E84E2D2B924C8C006591B6 /* SplashScreen.swift */,
 				D9152FE42B82AD5900BBD8FC /* Assets.xcassets */,
 				D9152FE62B82AD5900BBD8FC /* Preview Content */,
 			);
@@ -257,6 +260,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9E84E2E2B924C8C006591B6 /* SplashScreen.swift in Sources */,
 				D9152FE32B82AD5600BBD8FC /* ContentView.swift in Sources */,
 				D9152FE12B82AD5600BBD8FC /* SleepyTimeAppApp.swift in Sources */,
 			);
