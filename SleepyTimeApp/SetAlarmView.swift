@@ -1,31 +1,15 @@
 //
-//  ContentView.swift
+//  SetAlarm.swift
 //  SleepyTimeApp
 //
-//  Created by Jared Rivard on 2/18/24.
+//  Created by Jared Rivard on 3/1/24.
 //
 
 import SwiftUI
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
-
-#Preview {
-    ContentView()
-}
-
-/*struct SetAlarmView: View {
-    @Binding var alarmTime: Date
-    @Binding var isAlarmOn: Bool // Binding to track whether the alarm is on or off
+struct SetAlarmView: View {
+    @State var alarmTime = Date()
+    @State var isAlarmOn =  false// Binding to track whether the alarm is on or off
     @State private var isWheelHidden = true
     @State private var alarms: [Date] = [] // Track the alarms
     
@@ -142,25 +126,7 @@ struct ContentView: View {
     }
 }
 
-
-struct StatisticsView: View {
-    var body: some View {
-        Text("Statistics")
-            .font(.title)
-            .padding()
-    }
+#Preview{
+    SetAlarmView()
 }
 
-struct SleepLogView: View {
-    var body: some View {
-        Text("Sleep Log")
-            .font(.title)
-            .padding()
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}*/

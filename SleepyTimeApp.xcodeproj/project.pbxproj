@@ -15,6 +15,7 @@
 		D9152FFC2B82AD5A00BBD8FC /* SleepyTimeAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FFB2B82AD5A00BBD8FC /* SleepyTimeAppUITests.swift */; };
 		D9152FFE2B82AD5A00BBD8FC /* SleepyTimeAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FFD2B82AD5A00BBD8FC /* SleepyTimeAppUITestsLaunchTests.swift */; };
 		D9E84E2E2B924C8C006591B6 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E84E2D2B924C8C006591B6 /* SplashScreen.swift */; };
+		D9E84E302B926094006591B6 /* SetAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E84E2F2B926094006591B6 /* SetAlarmView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		D9152FFB2B82AD5A00BBD8FC /* SleepyTimeAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepyTimeAppUITests.swift; sourceTree = "<group>"; };
 		D9152FFD2B82AD5A00BBD8FC /* SleepyTimeAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepyTimeAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D9E84E2D2B924C8C006591B6 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
+		D9E84E2F2B926094006591B6 /* SetAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAlarmView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				D9152FE02B82AD5600BBD8FC /* SleepyTimeAppApp.swift */,
+				D9E84E2F2B926094006591B6 /* SetAlarmView.swift */,
 				D9152FE22B82AD5600BBD8FC /* ContentView.swift */,
 				D9E84E2D2B924C8C006591B6 /* SplashScreen.swift */,
 				D9152FE42B82AD5900BBD8FC /* Assets.xcassets */,
@@ -262,6 +265,7 @@
 			files = (
 				D9E84E2E2B924C8C006591B6 /* SplashScreen.swift in Sources */,
 				D9152FE32B82AD5600BBD8FC /* ContentView.swift in Sources */,
+				D9E84E302B926094006591B6 /* SetAlarmView.swift in Sources */,
 				D9152FE12B82AD5600BBD8FC /* SleepyTimeAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
