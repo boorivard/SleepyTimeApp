@@ -55,6 +55,7 @@ struct ContentView: View {
 }
 
 struct SetAlarmView: View {
+    @Binding var alarmTime: Date
     @Binding var isAlarmOn: Bool // Binding to track whether the alarm is on or off
     @State private var alarms: [Alarm] = [] // Track the alarms
     
