@@ -7,8 +7,8 @@
 
 import SwiftUI
 import UserNotifications
+import AVFoundation
 
-import UserNotifications
 
 
 
@@ -16,9 +16,10 @@ struct ContentView: View {
 
     @State private var isAlarmOn = false // Track whether the alarm is on or off
 
-    @State private var alarmTime = Date()
+    @State private var alarmTime = Date() + 20
 
     @State private var isSleepModeActive = false // Track whether sleep mode is active
+    
 
     
 
@@ -28,7 +29,7 @@ struct ContentView: View {
 
             VStack { // Embedding SetAlarmView and SleepModeView in a VStack
 
-                SetAlarmView(isAlarmOn: $isAlarmOn, alarmTime: $alarmTime)
+                SetAlarmView()
 
                 Button(action: {
 
@@ -56,7 +57,7 @@ struct ContentView: View {
 
                 .sheet(isPresented: $isSleepModeActive) {
 
-                    SleepModeView(isSleepModeActive: $isSleepModeActive)
+                    SleepModeView(isSleepModeActive: $isSleepModeActive, alarmTime: $alarmTime)
 
                 }
 
@@ -104,11 +105,10 @@ struct ContentView: View {
 
 struct SetAlarmView: View {
 
-    @State private var alarms: [Alarm] = [] // Track the alarms
+    @State public var alarms: [Alarm] = [] // Track the alarms
     
     @State private var isAddingAlarm = false // Track whether the user is adding a new alarm
     @State private var selectedAlarmTime = Date() // Temporary variable to capture selected alarm time
-    
 
     var body: some View {
 
@@ -326,14 +326,13 @@ struct SleepLogView: View {
 struct SleepModeView: View {
 
     @Binding var isSleepModeActive: Bool // Binding to control presentation
-
-    
-
+    @Binding var alarmTime: Date
+    @State private var isAlarmTriggered = false
     var body: some View {
-
+    
         VStack {
-
-            Text("Sleep Mode")
+            
+            Text("Sleep Mode-\(alarmTime, style: .time)")
 
                 .font(.title)
 
@@ -368,9 +367,33 @@ struct SleepModeView: View {
             .padding(.horizontal, 20)
 
         }
+        .onAppear(){
+            alarmGoesOff()
+        }
 
     }
-
+    
+    func alarmGoesOff(){
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+            if Date() >= alarmTime {
+                triggerAlarm()
+                isSleepModeActive.toggle()
+                timer.invalidate()
+            }
+        }
+    }
+    
+    func triggerAlarm(){
+        playSound()
+        isAlarmTriggered = true
+    }
+    
+    func playSound(){
+        guard let soundURL = Bundle.main.url(forResource:"alarm", withExtension: "wav") else {return}
+        let player = AVPlayer(url:soundURL)
+        player.play()
+    }
+        
 }
 
 
