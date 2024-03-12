@@ -482,7 +482,16 @@ struct SleepModeView: View {
             .cornerRadius(10)
 
             .padding(.horizontal, 20)
-
+            
+            Button("Stop") {
+                                // Button action
+                                
+                            }
+                            .padding()
+                            .background(Color.orange)
+                            .foregroundColor(.white)
+                            .cornerRadius(100)
+                            .opacity(isAlarmTriggered ? 1 : 0) // Toggle button visibility
         }
         .onAppear(){
             alarmGoesOff()
@@ -494,7 +503,6 @@ struct SleepModeView: View {
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             if Date() >= alarmTime {
                 triggerAlarm()
-                isSleepModeActive.toggle()
                 timer.invalidate()
             }
         }
