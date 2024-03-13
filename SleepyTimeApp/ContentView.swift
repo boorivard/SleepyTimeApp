@@ -109,18 +109,18 @@ struct SetAlarmView: View {
                     if let latestAlarm = alarms.last {
                         HStack {
                             Text("Next Alarm:")
-                                .foregroundColor(.white)
+                                .foregroundColor(.black)
                                 .padding()
 
                             Text("\(latestAlarm, style: .time)")
-                                .foregroundColor(.white)
+                                .foregroundColor(.black)
                                 .padding()
 
                             Spacer() // Pushes the toggle to the right
 
                             Toggle(isOn: $isAlarmOn, label: {
                                 Text("Turn Alarm \(isAlarmOn ? "Off" : "On")")
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.black)
                             })
                             .padding()
                         }
@@ -156,6 +156,9 @@ struct SetAlarmView: View {
                         .labelsHidden()
                         .datePickerStyle(WheelDatePickerStyle())
                         .padding()
+                        .onAppear {
+                                                UIDatePicker.appearance().minuteInterval = 1
+                                            }
 
                     Button(action: {
                         setAlarm(at: alarmTime)
@@ -165,7 +168,7 @@ struct SetAlarmView: View {
                         HStack {
                             Image(systemName: "slider.horizontal.3")
                                 .font(.title)
-                                .foregroundColor(.red)
+                                .foregroundColor(.white)
                             Text("Set Alarm")
                                 .font(.headline)
                                 .foregroundColor(.white)
@@ -179,7 +182,7 @@ struct SetAlarmView: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .background(Color.blue) // Background color for the hidden state
+            .background(Color.gray.opacity(0.1)) // Background color for the hidden state
         }
     }
 
