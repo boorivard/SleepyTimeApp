@@ -7,11 +7,10 @@
 
 import SwiftUI
 //Jared Rivard's code is here
-@main
-struct SleepyTimeAppApp: App {
+@main struct SleepyTimeAppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashScreen()
         }
     }
 }
