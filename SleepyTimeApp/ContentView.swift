@@ -106,8 +106,8 @@ struct SetAlarmView: View {
     var body: some View {
         VStack {
             VStack {
-                if alarms.count > 0 {
-                    ForEach(alarms.indices, id: \.self) { index in
+                if isWheelHidden {
+                    if let latestAlarm = alarms.last{
                         HStack {
                             Text("Next Alarm:")
                                 .foregroundColor(.black)
@@ -125,15 +125,6 @@ struct SetAlarmView: View {
                             })
 
                             .padding()
-
-                            
-                            Button(action: {
-                                deleteAlarm(at: index)
-                            }) {
-                                Image(systemName: "trash")
-                                    .foregroundColor(.white)
-                                    .padding()
-                            }
                         }
 
                     }
@@ -175,8 +166,9 @@ struct SetAlarmView: View {
                                                 UIDatePicker.appearance().minuteInterval = 1
                                             }
                     Button(action: {
-                        addAlarm(at: selectedAlarmTime)
-                        isAddingAlarm = false // Hide the DatePicker after setting the alarm
+                        setAlarm(at: alarmTime)
+                        alarms.append(alarmTime)
+                        isWheelHidden = true
                     }) {
                         HStack {
                            Image(systemName: "slider.horizontal.3")
@@ -234,20 +226,6 @@ struct SetAlarmView: View {
         }
 
     }
-    private func deleteAlarm(at index: Int) {
-        let alarm = alarms[index]
-        alarms.remove(at: index)
-        
-        // Remove corresponding notification request
-        let alarmTime = alarm.time
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["Alarm-\(alarmTime.description)"])
-    }
-}
-
-struct Alarm: Identifiable {
-    let id = UUID()
-    let time: Date
-    var isOn: Bool
 }
 
 // Other views remain the same
@@ -269,148 +247,148 @@ struct StatisticsView: View {
 
 
 struct SleepLogView: View {
-
-    var body: some View {
-
-        Text("Sleep Log")
-
-            .font(.title)
-
-            .padding()
-
-
-struct SleepModeView: View {
-
-    @Binding var isSleepModeActive: Bool // Binding to control presentation
-    @Binding var alarmTime: Date
-    @Binding var isAlarmOn: Bool
-    @State private var isAlarmTriggered = false
     
     var body: some View {
-    
-        VStack {
-            if(isAlarmOn){
-                Text(alarmTime, style: .time)
-                
-                    .font(.system(size: 52))
-                
-                    .foregroundColor(.orange)
-                
-                    .padding()
-            }else{
-                Text("Alarm is Off")
-                
-                    .font(.system(size: 52))
-                
-                    .foregroundColor(.orange)
-                
-                    .padding()
-            }
-            
-
-            Button(action: {
-
-                isSleepModeActive.toggle() // Toggle sleep mode
-
-            }) {
-
-                Text("Exit Sleep Mode")
-
-                    .font(.headline)
-
-                    .foregroundColor(.white)
-
-                    .padding()
-
-            }
-
-            .frame(maxWidth: .infinity)
-
-            .background(Color.orange)
-
-            .cornerRadius(10)
-
-            .padding(.horizontal, 20)
-            
-            Button("Stop") {
-                isAlarmTriggered.toggle()
-                Sounds.stopSound()
-                isSleepModeActive.toggle()
-                            }
-                            .padding()
-                            .background(Color.orange)
-                            .foregroundColor(.white)
-                            .cornerRadius(100)
-                            .opacity(isAlarmTriggered ? 1 : 0) // Toggle button visibility
-        }
-        .onAppear(){
-            if(isAlarmOn){
-                alarmGoesOff()
-            }
-        }
-
-    }
-    
-    func alarmGoesOff(){
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-        if Date() >= alarmTime {
-                triggerAlarm()
-                timer.invalidate()
-            }
-        }
-    }
-    
-    func triggerAlarm(){
-        playSound()
-        isAlarmTriggered = true
-    }
-    
-    func playSound(){
-        Sounds.playsSounds(soundfile: "alarm.wav")
-    }
         
-}
-
-
-struct ContentView_Previews: PreviewProvider {
-
-    static var previews: some View {
-
-        ContentView()
-
+        Text("Sleep Log")
+        
+            .font(.title)
+        
+            .padding()
     }
-
 }
-
-struct alarmstats {
-    var hour: Int
-    var minute: Int
-}
-//Function to calculate total alarm time
-func Totalalarmtime(alarm: alarmstats, Wakeuptime: Date) -> TimeInterval {
-    let calendar = Calendar.current
-    
-    
-    //Get current time & date
-    _ = Date()
-    let WakeupComponents = calendar.dateComponents([.year, .month, .day], from: Wakeuptime)
-    
-    // New date representing the alarm time for the current day
-    var alarmDatecomponents = DateComponents()
-    alarmDatecomponents.year = WakeupComponents.year
-    alarmDatecomponents.month = WakeupComponents.month
-    alarmDatecomponents.day = WakeupComponents.day
-    alarmDatecomponents.hour = alarm.hour
-    alarmDatecomponents.minute = alarm.minute
-    
-    let alarmTime = calendar.date(from: alarmDatecomponents)!
-    
-    //calculation for time slept
-    let timeslept = Wakeuptime.timeIntervalSince(alarmTime)
-    
-    return timeslept
-    
-    
-}
-
-
+        
+        struct SleepModeView: View {
+            
+            @Binding var isSleepModeActive: Bool // Binding to control presentation
+            @Binding var alarmTime: Date
+            @Binding var isAlarmOn: Bool
+            @State private var isAlarmTriggered = false
+            
+            var body: some View {
+                
+                VStack {
+                    if(isAlarmOn){
+                        Text(alarmTime, style: .time)
+                        
+                            .font(.system(size: 52))
+                        
+                            .foregroundColor(.orange)
+                        
+                            .padding()
+                    }else{
+                        Text("Alarm is Off")
+                        
+                            .font(.system(size: 52))
+                        
+                            .foregroundColor(.orange)
+                        
+                            .padding()
+                    }
+                    
+                    
+                    Button(action: {
+                        
+                        isSleepModeActive.toggle() // Toggle sleep mode
+                        
+                    }) {
+                        
+                        Text("Exit Sleep Mode")
+                        
+                            .font(.headline)
+                        
+                            .foregroundColor(.white)
+                        
+                            .padding()
+                        
+                    }
+                    
+                    .frame(maxWidth: .infinity)
+                    
+                    .background(Color.orange)
+                    
+                    .cornerRadius(10)
+                    
+                    .padding(.horizontal, 20)
+                    
+                    Button("Stop") {
+                        isAlarmTriggered.toggle()
+                        Sounds.stopSound()
+                        isSleepModeActive.toggle()
+                    }
+                    .padding()
+                    .background(Color.orange)
+                    .foregroundColor(.white)
+                    .cornerRadius(100)
+                    .opacity(isAlarmTriggered ? 1 : 0) // Toggle button visibility
+                }
+                .onAppear(){
+                    if(isAlarmOn){
+                        alarmGoesOff()
+                    }
+                }
+                
+            }
+            
+            func alarmGoesOff(){
+                Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+                    if Date() >= alarmTime {
+                        triggerAlarm()
+                        timer.invalidate()
+                    }
+                }
+            }
+            
+            func triggerAlarm(){
+                playSound()
+                isAlarmTriggered = true
+            }
+            
+            func playSound(){
+                Sounds.playsSounds(soundfile: "alarm.wav")
+            }
+            
+        }
+        
+        
+        struct ContentView_Previews: PreviewProvider {
+            
+            static var previews: some View {
+                
+                ContentView()
+                
+            }
+            
+        }
+        
+        struct alarmstats {
+            var hour: Int
+            var minute: Int
+        }
+        //Function to calculate total alarm time
+        func Totalalarmtime(alarm: alarmstats, Wakeuptime: Date) -> TimeInterval {
+            let calendar = Calendar.current
+            
+            
+            //Get current time & date
+            _ = Date()
+            let WakeupComponents = calendar.dateComponents([.year, .month, .day], from: Wakeuptime)
+            
+            // New date representing the alarm time for the current day
+            var alarmDatecomponents = DateComponents()
+            alarmDatecomponents.year = WakeupComponents.year
+            alarmDatecomponents.month = WakeupComponents.month
+            alarmDatecomponents.day = WakeupComponents.day
+            alarmDatecomponents.hour = alarm.hour
+            alarmDatecomponents.minute = alarm.minute
+            
+            let alarmTime = calendar.date(from: alarmDatecomponents)!
+            
+            //calculation for time slept
+            let timeslept = Wakeuptime.timeIntervalSince(alarmTime)
+            
+            return timeslept
+            
+            
+        }
+        
