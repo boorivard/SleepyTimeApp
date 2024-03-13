@@ -52,7 +52,7 @@ struct ContentView: View {
 
                 .sheet(isPresented: $isSleepModeActive) {
 
-                    SleepModeView(isSleepModeActive: $isSleepModeActive, alarmTime: $alarmTime)
+                    SleepModeView(isSleepModeActive: $isSleepModeActive, alarmTime: $alarmTime, isAlarmOn: $isAlarmOn)
 
                 }
 
@@ -253,20 +253,29 @@ struct SleepModeView: View {
 
     @Binding var isSleepModeActive: Bool // Binding to control presentation
     @Binding var alarmTime: Date
+    @Binding var isAlarmOn: Bool
     @State private var isAlarmTriggered = false
     
     var body: some View {
     
         VStack {
-            
-            Text("Sleep Mode-\(alarmTime, style: .time)")
-
-                .font(.title)
-
-                .foregroundColor(.orange)
-
-                .padding()
-
+            if(isAlarmOn){
+                Text(alarmTime, style: .time)
+                
+                    .font(.system(size: 52))
+                
+                    .foregroundColor(.orange)
+                
+                    .padding()
+            }else{
+                Text("Alarm is Off")
+                
+                    .font(.system(size: 52))
+                
+                    .foregroundColor(.orange)
+                
+                    .padding()
+            }
             
 
             Button(action: {
@@ -294,9 +303,7 @@ struct SleepModeView: View {
             .padding(.horizontal, 20)
             
             Button("Stop") {
-                                // Button action
                 isAlarmTriggered.toggle()
-                
                 Sounds.stopSound()
                 isSleepModeActive.toggle()
                             }
@@ -307,7 +314,9 @@ struct SleepModeView: View {
                             .opacity(isAlarmTriggered ? 1 : 0) // Toggle button visibility
         }
         .onAppear(){
-            alarmGoesOff()
+            if(isAlarmOn){
+                alarmGoesOff()
+            }
         }
 
     }
