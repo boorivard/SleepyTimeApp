@@ -12,12 +12,9 @@ import AVFoundation
 struct ContentView: View {
 
     @State private var isAlarmOn = false // Track whether the alarm is on or off
-
     @State private var alarmTime = Date()
-
     @State private var isSleepModeActive = false // Track whether sleep mode is active
     
-
     var body: some View {
 
         TabView {
@@ -52,7 +49,9 @@ struct ContentView: View {
 
                 .sheet(isPresented: $isSleepModeActive) {
 
+
                     SleepModeView(isSleepModeActive: $isSleepModeActive, alarmTime: $alarmTime, isAlarmOn: $isAlarmOn)
+
 
                 }
 
@@ -96,17 +95,19 @@ struct ContentView: View {
 
 }
 
+
+
 struct SetAlarmView: View {
     @Binding var alarmTime: Date
     @Binding var isAlarmOn: Bool // Binding to track whether the alarm is on or off
     @State private var isWheelHidden = true
     @State private var alarms: [Date] = [] // Track the alarms
-
+  
     var body: some View {
         VStack {
             VStack {
-                if isWheelHidden {
-                    if let latestAlarm = alarms.last {
+                if alarms.count > 0 {
+                    ForEach(alarms.indices, id: \.self) { index in
                         HStack {
                             Text("Next Alarm:")
                                 .foregroundColor(.black)
@@ -122,8 +123,19 @@ struct SetAlarmView: View {
                                 Text("Turn Alarm \(isAlarmOn ? "Off" : "On")")
                                     .foregroundColor(.black)
                             })
+
                             .padding()
+
+                            
+                            Button(action: {
+                                deleteAlarm(at: index)
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.white)
+                                    .padding()
+                            }
                         }
+
                     }
 
                     Button(action: {
@@ -153,20 +165,21 @@ struct SetAlarmView: View {
                     }
 
                     DatePicker("Select Alarm Time", selection: $alarmTime, displayedComponents: .hourAndMinute)
+
                         .labelsHidden()
+
                         .datePickerStyle(WheelDatePickerStyle())
+
                         .padding()
                         .onAppear {
                                                 UIDatePicker.appearance().minuteInterval = 1
                                             }
-
                     Button(action: {
-                        setAlarm(at: alarmTime)
-                        alarms.append(alarmTime) // Add the new alarm to the list
-                        isWheelHidden = true // Hide the wheel after setting the alarm
+                        addAlarm(at: selectedAlarmTime)
+                        isAddingAlarm = false // Hide the DatePicker after setting the alarm
                     }) {
                         HStack {
-                            Image(systemName: "slider.horizontal.3")
+                           Image(systemName: "slider.horizontal.3")
                                 .font(.title)
                                 .foregroundColor(.white)
                             Text("Set Alarm")
@@ -185,18 +198,25 @@ struct SetAlarmView: View {
             .background(Color.gray.opacity(0.1)) // Background color for the hidden state
         }
     }
-
     private func setAlarm(at time: Date) {
+
         // Create notification content
+
         let content = UNMutableNotificationContent()
+
         content.title = "Alarm"
+
         content.body = "Time to wake up!"
 
         // Extract hour and minute components from the selected time
+
         let components = Calendar.current.dateComponents([.hour, .minute], from: time)
 
         // Create trigger for notification based on selected time
+
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+
+
 
         // Create request for notification
         let request = UNNotificationRequest(identifier: "Alarm", content: content, trigger: trigger)
@@ -211,11 +231,23 @@ struct SetAlarmView: View {
                     print("Alarm set for \(time)")
                 }
             }
-        } else {
-            // Remove request from notification center
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["Alarm"])
         }
+
     }
+    private func deleteAlarm(at index: Int) {
+        let alarm = alarms[index]
+        alarms.remove(at: index)
+        
+        // Remove corresponding notification request
+        let alarmTime = alarm.time
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["Alarm-\(alarmTime.description)"])
+    }
+}
+
+struct Alarm: Identifiable {
+    let id = UUID()
+    let time: Date
+    var isOn: Bool
 }
 
 // Other views remain the same
@@ -245,11 +277,6 @@ struct SleepLogView: View {
             .font(.title)
 
             .padding()
-
-    }
-
-}
-
 
 
 struct SleepModeView: View {
@@ -345,7 +372,6 @@ struct SleepModeView: View {
 }
 
 
-
 struct ContentView_Previews: PreviewProvider {
 
     static var previews: some View {
@@ -355,4 +381,36 @@ struct ContentView_Previews: PreviewProvider {
     }
 
 }
+
+struct alarmstats {
+    var hour: Int
+    var minute: Int
+}
+//Function to calculate total alarm time
+func Totalalarmtime(alarm: alarmstats, Wakeuptime: Date) -> TimeInterval {
+    let calendar = Calendar.current
+    
+    
+    //Get current time & date
+    _ = Date()
+    let WakeupComponents = calendar.dateComponents([.year, .month, .day], from: Wakeuptime)
+    
+    // New date representing the alarm time for the current day
+    var alarmDatecomponents = DateComponents()
+    alarmDatecomponents.year = WakeupComponents.year
+    alarmDatecomponents.month = WakeupComponents.month
+    alarmDatecomponents.day = WakeupComponents.day
+    alarmDatecomponents.hour = alarm.hour
+    alarmDatecomponents.minute = alarm.minute
+    
+    let alarmTime = calendar.date(from: alarmDatecomponents)!
+    
+    //calculation for time slept
+    let timeslept = Wakeuptime.timeIntervalSince(alarmTime)
+    
+    return timeslept
+    
+    
+}
+
 
