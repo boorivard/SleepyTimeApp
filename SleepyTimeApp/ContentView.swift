@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
-
 import UserNotifications
+import AVFoundation
+
 
 
 
@@ -18,24 +19,18 @@ struct ContentView: View {
     @State private var alarmTime = Date()
 
     @State private var isSleepModeActive = false // Track whether sleep mode is active
+    
 
-      
     
 
     var body: some View {
-        
+
         TabView {
-         
-          
+
             VStack { // Embedding SetAlarmView and SleepModeView in a VStack
-                
-    
-                SetAlarmView(isAlarmOn: $isAlarmOn, alarmTime: $alarmTime)
-                  //  .background(
-                     //         LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.8235294118, green: 0.9137254902, blue: 0.9960784314, alpha: 1)), Color(#colorLiteral(red: 0.9176470588, green: 0.9294117647, blue: 0.937254902, alpha: 1))]), startPoint: .top, endPoint: .bottom)
-                       //           .edgesIgnoringSafeArea(.all)
-                       //   )
-                
+
+                SetAlarmView(alarmTime: $alarmTime, isAlarmOn: $isAlarmOn)
+
                 Button(action: {
 
                     isSleepModeActive.toggle() // Toggle sleep mode
@@ -62,13 +57,12 @@ struct ContentView: View {
 
                 .sheet(isPresented: $isSleepModeActive) {
 
-                    SleepModeView(isSleepModeActive: $isSleepModeActive)
+                    SleepModeView(isSleepModeActive: $isSleepModeActive, alarmTime: $alarmTime)
 
                 }
 
             }
 
-            
             .tabItem {
 
                 Image(systemName: "alarm")
@@ -102,283 +96,129 @@ struct ContentView: View {
                 }
 
         }
-       
-      
+
     }
 
 }
 
-
-
 struct SetAlarmView: View {
-
+    @Binding var alarmTime: Date
     @Binding var isAlarmOn: Bool // Binding to track whether the alarm is on or off
-
-    @Binding var alarmTime: Date // Binding to track alarm time
-
-    @State private var alarms: [Alarm] = [] // Track the alarms
-
-    
-    @State private var isAddingAlarm = false // Track whether the user is adding a new alarm
-
-    @State private var selectedAlarmTime = Date() // Temporary variable to capture selected alarm time
-
-    
+    @State private var isWheelHidden = true
+    @State private var alarms: [Date] = [] // Track the alarms
 
     var body: some View {
-
         VStack {
-
             VStack {
-
-                if alarms.count > 0 {
-
-                    ForEach(alarms.indices, id: \.self) { index in
-
+                if isWheelHidden {
+                    if let latestAlarm = alarms.last {
                         HStack {
-
-                            Text("Alarm \(index + 1):")
-
+                            Text("Next Alarm:")
                                 .foregroundColor(.black)
-
                                 .padding()
 
-                            
-
-                            Text("\(alarms[index].time, style: .time)")
-
+                            Text("\(latestAlarm, style: .time)")
                                 .foregroundColor(.black)
-
                                 .padding()
-
-                            
 
                             Spacer() // Pushes the toggle to the right
 
-                            
-
-                            Toggle(isOn: $alarms[index].isOn, label: {
-
-                                Text(alarms[index].isOn ? "On" : "Off")
-
+                            Toggle(isOn: $isAlarmOn, label: {
+                                Text("Turn Alarm \(isAlarmOn ? "Off" : "On")")
                                     .foregroundColor(.black)
-
                             })
-
                             .padding()
-
-                            
-
-                            Button(action: {
-
-                                deleteAlarm(at: index)
-
-                            }) {
-
-                                Image(systemName: "trash")
-
-                                    .foregroundColor(.black)
-
-                                    .padding()
-
-                            }
-
                         }
-                    
-
                     }
-
-                }
-
-                
-
-                Button(action: {
-
-                    isAddingAlarm.toggle()
-
-                }) {
-
-                    HStack {
-
-                        Image(systemName: "plus.circle")
-
-                            .font(.title)
-
-                            .foregroundColor(.white)
-
-                        Text("Add Alarm")
-
-                            .font(.headline)
-
-                            .foregroundColor(.white)
-
-                            .padding()
-
-                    }
-
-                    .frame(maxWidth: .infinity)
-
-                    .background(Color.green)
-
-                    .cornerRadius(10)
-
-                }
-
-                .padding(.horizontal, 20)
-
-                
-
-                if isAddingAlarm {
-
-                    DatePicker("Select Alarm Time", selection: $selectedAlarmTime, displayedComponents: .hourAndMinute)
-
-                        .labelsHidden()
-
-                        .datePickerStyle(WheelDatePickerStyle())
-
-                        .padding()
-
-                    
 
                     Button(action: {
-
-                        addAlarm(at: selectedAlarmTime)
-
-                        isAddingAlarm = false // Hide the DatePicker after setting the alarm
-
-                    }) {
-
-                        HStack {
-
-                            Image(systemName: "slider.horizontal.3")
-
-                                .font(.title)
-
-                                .foregroundColor(.white)
-
-                            Text("Set Alarm")
-
-                                .font(.headline)
-
-                                .foregroundColor(.white)
-
-                                .padding()
-
+                        withAnimation {
+                            isWheelHidden.toggle()
                         }
-
+                    }) {
+                        HStack {
+                            Image(systemName: "slider.horizontal.3")
+                                .font(.title)
+                                .foregroundColor(.white)
+                            Text("Add Alarm")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                        }
                         .frame(maxWidth: .infinity)
-
                         .background(Color.green)
-
                         .cornerRadius(10)
-
+                    }
+                    .padding(.horizontal, 20)
+                } else {
+                    List {
+                        ForEach(alarms, id: \.self) { alarm in
+                            Text(alarm, style: .time)
+                        }
                     }
 
+                    DatePicker("Select Alarm Time", selection: $alarmTime, displayedComponents: .hourAndMinute)
+                        .labelsHidden()
+                        .datePickerStyle(WheelDatePickerStyle())
+                        .padding()
+
+                    Button(action: {
+                        setAlarm(at: alarmTime)
+                        alarms.append(alarmTime) // Add the new alarm to the list
+                        isWheelHidden = true // Hide the wheel after setting the alarm
+                    }) {
+                        HStack {
+                            Image(systemName: "slider.horizontal.3")
+                                .font(.title)
+                                .foregroundColor(.white)
+                            Text("Set Alarm")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                        }
+                        .frame(maxWidth: .infinity)
+                        .background(Color.green)
+                        .cornerRadius(10)
+                    }
                     .padding(.horizontal, 20)
-
                 }
-
             }
-
             .frame(maxWidth: .infinity)
-
-      //    .background(Color.blue) // Background color for the hidden state
             .background(Color.gray.opacity(0.1))
-
         }
-
     }
 
-    
-
-    private func addAlarm(at time: Date) {
-
-        alarms.append(Alarm(time: time, isOn: true))
-
-        
-
+    private func setAlarm(at time: Date) {
         // Create notification content
-
         let content = UNMutableNotificationContent()
-
         content.title = "Alarm"
-
         content.body = "Time to wake up!"
 
-        
-
         // Extract hour and minute components from the selected time
-
         let components = Calendar.current.dateComponents([.hour, .minute], from: time)
 
-        
-
         // Create trigger for notification based on selected time
-
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
 
-        
-
         // Create request for notification
+        let request = UNNotificationRequest(identifier: "Alarm", content: content, trigger: trigger)
 
-        let request = UNNotificationRequest(identifier: "Alarm-\(time.description)", content: content, trigger: trigger)
-
-        
-
-        // Add request to notification center
-
-        UNUserNotificationCenter.current().add(request) { error in
-
-            if let error = error {
-
-                print("Error scheduling notification: \(error.localizedDescription)")
-
-            } else {
-
-                print("Alarm set for \(time)")
-
+        // Add or remove request based on alarm state
+        if isAlarmOn {
+            // Add request to notification center
+            UNUserNotificationCenter.current().add(request) { error in
+                if let error = error {
+                    print("Error scheduling notification: \(error.localizedDescription)")
+                } else {
+                    print("Alarm set for \(time)")
+                }
             }
-
+        } else {
+            // Remove request from notification center
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["Alarm"])
         }
-
     }
-
-    
-
-    private func deleteAlarm(at index: Int) {
-
-        let alarm = alarms[index]
-
-        alarms.remove(at: index)
-
-        
-
-        // Remove corresponding notification request
-
-        let alarmTime = alarm.time
-
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["Alarm-\(alarmTime.description)"])
-
-    }
-
 }
-
-
-
-struct Alarm: Identifiable {
-
-    let id = UUID()
-
-    let time: Date
-
-    var isOn: Bool
-
-}
-
-
-
-// Other views remain the same
-
 
 
 struct StatisticsView: View {
@@ -414,51 +254,86 @@ struct SleepLogView: View {
 
 
 struct SleepModeView: View {
+
     @Binding var isSleepModeActive: Bool // Binding to control presentation
-    
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // Timer to update the time every second
-    @State private var currentTime = Date() // Variable to hold the current time
-    
-    // Define a DateFormatter for time display
-    let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short // Choose your desired time style
-        return formatter
-    }()
-    
+    @Binding var alarmTime: Date
+    @State private var isAlarmTriggered = false
     var body: some View {
-        VStack {
-          //  Text("Sleep Mode")
-            //    .font(.title)
-           //     .foregroundColor(.orange)
-            //    .padding()
-            
-            Text(dateFormatter.string(from: currentTime)) // Use the DateFormatter to format the current time
-                .font(.system(size: 52))
-                .padding()
-            
-            Button(action: {
-                isSleepModeActive.toggle() // Toggle sleep mode
-            }) {
-                Text("Exit Sleep Mode")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding()
-            }
-            .frame(maxWidth: .infinity)
-            .background(Color.orange)
-            .cornerRadius(10)
-            .padding(.horizontal, 20)
-        }
     
-        .onReceive(timer) { time in
-            self.currentTime = time // Update current time every second
+        VStack {
+            
+            Text(alarmTime, style: .time)
+
+                .font(.system(size: 52))
+            
+                .foregroundColor(.orange)
+
+                .padding()
+
+            
+
+            Button(action: {
+
+                isSleepModeActive.toggle() // Toggle sleep mode
+
+            }) {
+
+                Text("Exit Sleep Mode")
+
+                    .font(.headline)
+
+                    .foregroundColor(.white)
+
+                    .padding()
+
+            }
+
+            .frame(maxWidth: .infinity)
+
+            .background(Color.orange)
+
+            .cornerRadius(10)
+
+            .padding(.horizontal, 20)
+            
+            Button("Stop") {
+                                // Button action
+                                
+                            }
+                            .padding()
+                            .background(Color.orange)
+                            .foregroundColor(.white)
+                            .cornerRadius(100)
+                            .opacity(isAlarmTriggered ? 1 : 0) // Toggle button visibility
         }
-        .onDisappear {
-            self.timer.upstream.connect().cancel() // Cancel timer when view disappears
+        .onAppear(){
+            alarmGoesOff()
+        }
+
+    }
+    
+    func alarmGoesOff(){
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+            if Date() >= alarmTime {
+                triggerAlarm()
+                timer.invalidate()
+            }
         }
     }
+    
+    func triggerAlarm(){
+        playSound()
+        isAlarmTriggered = true
+    }
+    
+    func playSound(){
+        guard let soundURL = Bundle.main.url(forResource:"alarm", withExtension: "wav") else {return}
+        let player = AVPlayer(url:soundURL)
+        player.play()
+    }
+        
 }
+
 
 
 struct ContentView_Previews: PreviewProvider {
@@ -470,5 +345,4 @@ struct ContentView_Previews: PreviewProvider {
     }
 
 }
-
 
