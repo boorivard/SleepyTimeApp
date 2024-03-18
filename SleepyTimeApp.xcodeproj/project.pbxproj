@@ -14,6 +14,11 @@
 		D9152FF22B82AD5A00BBD8FC /* SleepyTimeAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FF12B82AD5A00BBD8FC /* SleepyTimeAppTests.swift */; };
 		D9152FFC2B82AD5A00BBD8FC /* SleepyTimeAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FFB2B82AD5A00BBD8FC /* SleepyTimeAppUITests.swift */; };
 		D9152FFE2B82AD5A00BBD8FC /* SleepyTimeAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FFD2B82AD5A00BBD8FC /* SleepyTimeAppUITestsLaunchTests.swift */; };
+		D9A4CAEA2BA7BA8A0071B9D9 /* SleepyTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4CAE92BA7BA8A0071B9D9 /* SleepyTimeView.swift */; };
+		D9A4CAEC2BA7BB560071B9D9 /* SleepLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4CAEB2BA7BB560071B9D9 /* SleepLogView.swift */; };
+		D9A4CAEE2BA7BBF80071B9D9 /* SleepStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4CAED2BA7BBF80071B9D9 /* SleepStatisticsView.swift */; };
+		D9A4CAF02BA7BC9A0071B9D9 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4CAEF2BA7BC9A0071B9D9 /* Stats.swift */; };
+		D9A4CAF22BA7BD190071B9D9 /* SetAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4CAF12BA7BD190071B9D9 /* SetAlarmView.swift */; };
 		D9E5757D2BA136AF009C6023 /* alarm.wav in Resources */ = {isa = PBXBuildFile; fileRef = D9E84E352B9FFB36006591B6 /* alarm.wav */; };
 		D9E5757E2BA136B0009C6023 /* alarm.wav in Resources */ = {isa = PBXBuildFile; fileRef = D9E84E352B9FFB36006591B6 /* alarm.wav */; };
 		D9E575812BA13BA3009C6023 /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E575802BA13BA3009C6023 /* Sounds.swift */; };
@@ -49,6 +54,11 @@
 		D9152FF72B82AD5A00BBD8FC /* SleepyTimeAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SleepyTimeAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9152FFB2B82AD5A00BBD8FC /* SleepyTimeAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepyTimeAppUITests.swift; sourceTree = "<group>"; };
 		D9152FFD2B82AD5A00BBD8FC /* SleepyTimeAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepyTimeAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D9A4CAE92BA7BA8A0071B9D9 /* SleepyTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepyTimeView.swift; sourceTree = "<group>"; };
+		D9A4CAEB2BA7BB560071B9D9 /* SleepLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepLogView.swift; sourceTree = "<group>"; };
+		D9A4CAED2BA7BBF80071B9D9 /* SleepStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepStatisticsView.swift; sourceTree = "<group>"; };
+		D9A4CAEF2BA7BC9A0071B9D9 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Stats.swift; path = "Preview Content/Stats.swift"; sourceTree = "<group>"; };
+		D9A4CAF12BA7BD190071B9D9 /* SetAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAlarmView.swift; sourceTree = "<group>"; };
 		D9E575802BA13BA3009C6023 /* Sounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
 		D9E84E2D2B924C8C006591B6 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		D9E84E352B9FFB36006591B6 /* alarm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = alarm.wav; sourceTree = "<group>"; };
@@ -104,11 +114,16 @@
 			children = (
 				D9152FE02B82AD5600BBD8FC /* SleepyTimeAppApp.swift */,
 				D9152FE22B82AD5600BBD8FC /* ContentView.swift */,
+				D9A4CAF12BA7BD190071B9D9 /* SetAlarmView.swift */,
 				D9E84E2D2B924C8C006591B6 /* SplashScreen.swift */,
+				D9A4CAE92BA7BA8A0071B9D9 /* SleepyTimeView.swift */,
+				D9A4CAEB2BA7BB560071B9D9 /* SleepLogView.swift */,
+				D9A4CAED2BA7BBF80071B9D9 /* SleepStatisticsView.swift */,
 				D9152FE42B82AD5900BBD8FC /* Assets.xcassets */,
 				D9E84E342B9FFAA1006591B6 /* Sounds */,
 				D9152FE62B82AD5900BBD8FC /* Preview Content */,
 				D9E575802BA13BA3009C6023 /* Sounds.swift */,
+				D9A4CAEF2BA7BC9A0071B9D9 /* Stats.swift */,
 			);
 			path = SleepyTimeApp;
 			sourceTree = "<group>";
@@ -279,10 +294,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9A4CAEA2BA7BA8A0071B9D9 /* SleepyTimeView.swift in Sources */,
 				D9E84E2E2B924C8C006591B6 /* SplashScreen.swift in Sources */,
 				D9152FE32B82AD5600BBD8FC /* ContentView.swift in Sources */,
+				D9A4CAEE2BA7BBF80071B9D9 /* SleepStatisticsView.swift in Sources */,
+				D9A4CAEC2BA7BB560071B9D9 /* SleepLogView.swift in Sources */,
+				D9A4CAF02BA7BC9A0071B9D9 /* Stats.swift in Sources */,
 				D9152FE12B82AD5600BBD8FC /* SleepyTimeAppApp.swift in Sources */,
 				D9E575812BA13BA3009C6023 /* Sounds.swift in Sources */,
+				D9A4CAF22BA7BD190071B9D9 /* SetAlarmView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +466,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SleepyTimeApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 5S32FVBD39;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -458,7 +479,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = SleepyTime.SleepyTimeApp;
+				PRODUCT_BUNDLE_IDENTIFIER = SleepyTimeCompanyAlarmApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -474,6 +495,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SleepyTimeApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 5S32FVBD39;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -486,7 +508,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = SleepyTime.SleepyTimeApp;
+				PRODUCT_BUNDLE_IDENTIFIER = SleepyTimeCompanyAlarmApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
