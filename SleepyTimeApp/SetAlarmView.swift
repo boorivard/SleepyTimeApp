@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SetAlarmView: View {
+    @Environment(\.colorScheme) var colorScheme
     @Binding var alarmTime: Date
     @Binding var isAlarmOn: Bool // Binding to track whether the alarm is on or off
     @State private var isWheelHidden = true
@@ -19,19 +20,19 @@ struct SetAlarmView: View {
                 if isWheelHidden {
                     if let latestAlarm = alarms.last{
                         HStack {
-                            Text("Next Alarm:")
-                                .foregroundColor(.black)
+                            Text( "Next Alarm:")
+                                .foregroundColor(colorScheme == .dark ? .white : .black)
                                 .padding()
 
                             Text("\(latestAlarm, style: .time)")
-                                .foregroundColor(.black)
+                                .foregroundColor(colorScheme == .dark ? .white : .black)
                                 .padding()
 
                             Spacer() // Pushes the toggle to the right
 
                             Toggle(isOn: $isAlarmOn, label: {
                                 Text("Turn Alarm \(isAlarmOn ? "Off" : "On")")
-                                    .foregroundColor(.black)
+                                    .foregroundColor(colorScheme == .dark ? .white : .black)
                             })
 
                             .padding()
@@ -136,3 +137,4 @@ struct SetAlarmView: View {
         }
     }
 }
+

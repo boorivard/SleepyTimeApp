@@ -10,7 +10,6 @@ import UserNotifications
 import AVFoundation
 
 struct ContentView: View {
-
     @State private var isAlarmOn = false // Track whether the alarm is on or off
     @State private var alarmTime = Date()
     @State private var isSleepModeActive = false // Track whether sleep mode is active
