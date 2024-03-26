@@ -70,13 +70,13 @@ struct SleepModeView: View {
     }
     
     func triggerAlarm(){
-        playSound()
+        Sounds.playsSounds(soundfile: "alarm.wav")
         isAlarmTriggered = true
     }
     
-    func playSound(){
-        Sounds.playsSounds(soundfile: "alarm.wav")
-    }
-    
+}
+
+#Preview {
+    ContentView()
 }
 

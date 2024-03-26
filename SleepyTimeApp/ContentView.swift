@@ -13,7 +13,6 @@ import AVFoundation
 
 
 struct ContentView: View {
-
     @State private var isAlarmOn = false // Track whether the alarm is on or off
 
     @State private var alarmTime = Date() + 20
