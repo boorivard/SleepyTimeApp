@@ -17,7 +17,6 @@
 		D9A4CAEA2BA7BA8A0071B9D9 /* SleepyTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4CAE92BA7BA8A0071B9D9 /* SleepyTimeView.swift */; };
 		D9A4CAEC2BA7BB560071B9D9 /* SleepLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4CAEB2BA7BB560071B9D9 /* SleepLogView.swift */; };
 		D9A4CAEE2BA7BBF80071B9D9 /* SleepStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4CAED2BA7BBF80071B9D9 /* SleepStatisticsView.swift */; };
-		D9A4CAF02BA7BC9A0071B9D9 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4CAEF2BA7BC9A0071B9D9 /* Stats.swift */; };
 		D9A4CAF22BA7BD190071B9D9 /* SetAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4CAF12BA7BD190071B9D9 /* SetAlarmView.swift */; };
 		D9A4CAF52BB3320B0071B9D9 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = D9A4CAF42BB3320B0071B9D9 /* FirebaseAnalytics */; };
 		D9A4CAF72BB3320B0071B9D9 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D9A4CAF62BB3320B0071B9D9 /* FirebaseAnalyticsSwift */; };
@@ -25,6 +24,7 @@
 		D9A4CAFB2BB3320B0071B9D9 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = D9A4CAFA2BB3320B0071B9D9 /* FirebaseDatabase */; };
 		D9A4CAFD2BB3320B0071B9D9 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D9A4CAFC2BB3320B0071B9D9 /* FirebaseDatabaseSwift */; };
 		D9A4CAFF2BB33D700071B9D9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D9A4CAFE2BB33D700071B9D9 /* FirebaseFirestore */; };
+		D9A4CB012BB706660071B9D9 /* StatsUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4CB002BB706660071B9D9 /* StatsUIView.swift */; };
 		D9E5757D2BA136AF009C6023 /* alarm.wav in Resources */ = {isa = PBXBuildFile; fileRef = D9E84E352B9FFB36006591B6 /* alarm.wav */; };
 		D9E5757E2BA136B0009C6023 /* alarm.wav in Resources */ = {isa = PBXBuildFile; fileRef = D9E84E352B9FFB36006591B6 /* alarm.wav */; };
 		D9E575812BA13BA3009C6023 /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E575802BA13BA3009C6023 /* Sounds.swift */; };
@@ -63,8 +63,8 @@
 		D9A4CAE92BA7BA8A0071B9D9 /* SleepyTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepyTimeView.swift; sourceTree = "<group>"; };
 		D9A4CAEB2BA7BB560071B9D9 /* SleepLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepLogView.swift; sourceTree = "<group>"; };
 		D9A4CAED2BA7BBF80071B9D9 /* SleepStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepStatisticsView.swift; sourceTree = "<group>"; };
-		D9A4CAEF2BA7BC9A0071B9D9 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Stats.swift; path = "Preview Content/Stats.swift"; sourceTree = "<group>"; };
 		D9A4CAF12BA7BD190071B9D9 /* SetAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAlarmView.swift; sourceTree = "<group>"; };
+		D9A4CB002BB706660071B9D9 /* StatsUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsUIView.swift; sourceTree = "<group>"; };
 		D9E575802BA13BA3009C6023 /* Sounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
 		D9E84E2D2B924C8C006591B6 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		D9E84E352B9FFB36006591B6 /* alarm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = alarm.wav; sourceTree = "<group>"; };
@@ -131,11 +131,11 @@
 				D9A4CAE92BA7BA8A0071B9D9 /* SleepyTimeView.swift */,
 				D9A4CAEB2BA7BB560071B9D9 /* SleepLogView.swift */,
 				D9A4CAED2BA7BBF80071B9D9 /* SleepStatisticsView.swift */,
+				D9A4CB002BB706660071B9D9 /* StatsUIView.swift */,
+				D9E575802BA13BA3009C6023 /* Sounds.swift */,
 				D9152FE42B82AD5900BBD8FC /* Assets.xcassets */,
 				D9E84E342B9FFAA1006591B6 /* Sounds */,
 				D9152FE62B82AD5900BBD8FC /* Preview Content */,
-				D9E575802BA13BA3009C6023 /* Sounds.swift */,
-				D9A4CAEF2BA7BC9A0071B9D9 /* Stats.swift */,
 			);
 			path = SleepyTimeApp;
 			sourceTree = "<group>";
@@ -319,10 +319,10 @@
 			files = (
 				D9A4CAEA2BA7BA8A0071B9D9 /* SleepyTimeView.swift in Sources */,
 				D9E84E2E2B924C8C006591B6 /* SplashScreen.swift in Sources */,
+				D9A4CB012BB706660071B9D9 /* StatsUIView.swift in Sources */,
 				D9152FE32B82AD5600BBD8FC /* ContentView.swift in Sources */,
 				D9A4CAEE2BA7BBF80071B9D9 /* SleepStatisticsView.swift in Sources */,
 				D9A4CAEC2BA7BB560071B9D9 /* SleepLogView.swift in Sources */,
-				D9A4CAF02BA7BC9A0071B9D9 /* Stats.swift in Sources */,
 				D9152FE12B82AD5600BBD8FC /* SleepyTimeAppApp.swift in Sources */,
 				D9E575812BA13BA3009C6023 /* Sounds.swift in Sources */,
 				D9A4CAF22BA7BD190071B9D9 /* SetAlarmView.swift in Sources */,
