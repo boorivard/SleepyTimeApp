@@ -76,7 +76,3 @@ struct SleepModeView: View {
     
 }
 
-#Preview {
-    ContentView()
-}
-

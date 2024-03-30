@@ -86,11 +86,11 @@ struct SleepLogView: View {
         .onAppear {
             updateSliderValues()
         }
-        .onChange(of: selectedDate) { _ in
+        .onChange(of: selectedDate) {
             updateSliderValues()
         }
     }
-    
+        
     private func updateSliderValues() {
         if let ratings = viewModel.getSleepQuality(for: selectedDate) {
             sleepQuality = ratings["Overall Sleep Quality"] ?? 0
