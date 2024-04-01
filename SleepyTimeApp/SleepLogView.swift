@@ -1,17 +1,16 @@
 //  SleepLogView.swift
 //  SleepyTimeApp
 
-import Foundation
 import SwiftUI
 
 class SleepLogViewModel: ObservableObject {
-    @Published var sleepQualityRecords: [Date: [String: Double]] = [:]
+    @Published var sleepQualityRecords: [Date: [String: Any]] = [:]
     
-    func saveSleepQuality(for date: Date, ratings: [String: Double]) {
+    func saveSleepQuality(for date: Date, ratings: [String: Any]) {
         sleepQualityRecords[date] = ratings
     }
     
-    func getSleepQuality(for date: Date) -> [String: Double]? {
+    func getSleepQuality(for date: Date) -> [String: Any]? {
         return sleepQualityRecords[date]
     }
 }
@@ -19,29 +18,35 @@ class SleepLogViewModel: ObservableObject {
 struct SleepLogView: View {
     @ObservedObject private var viewModel = SleepLogViewModel()
     @State private var selectedDate = Date()
-    @State private var sleepQuality: Double = 0
+    @State private var sleepDisturbances: Double = 0
     @State private var easeOfFallingAsleep: Double = 0
-    @State private var qualityOfDeepSleep: Double = 0
+    @State private var hadDream: Bool = false
     @State private var feelingRestedUponWaking: Double = 0
-    
+    @State private var additionalComments: String = ""
+
     var body: some View {
         VStack(spacing: 20) {
             // Date selection controls
             HStack {
+                // Left arrow button
                 Button(action: {
                     selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate) ?? Date()
                     updateSliderValues()
+                    updateAdditionalComments()
                 }) {
                     Image(systemName: "arrow.left")
                         .foregroundColor(.blue)
                 }
-                
+
+                // Date picker
                 DatePicker("", selection: $selectedDate, displayedComponents: .date)
                     .datePickerStyle(CompactDatePickerStyle())
-                
+
+                // Right arrow button
                 Button(action: {
                     selectedDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate) ?? Date()
                     updateSliderValues()
+                    updateAdditionalComments()
                 }) {
                     Image(systemName: "arrow.right")
                         .foregroundColor(.blue)
@@ -49,26 +54,37 @@ struct SleepLogView: View {
             }
             .padding()
             .background(Color(UIColor.systemBackground))
-            
-            // Display sleep quality rating
-            if let selectedSleepQuality = viewModel.getSleepQuality(for: selectedDate) {
-                Text("Sleep Quality for \(selectedDate.formattedDate): \(Int(selectedSleepQuality["Overall Sleep Quality"] ?? 0))")
-                    .font(.headline)
-                    .foregroundColor(.primary)
-                    .padding()
-            }
-            
+
             // Questions
             VStack(spacing: 20) {
-                SleepQualityQuestionView(question: "Overall Sleep Quality", value: $sleepQuality)
+                SleepQualityQuestionView(question: "Number of times you woke up", value: $sleepDisturbances)
                 SleepQualityQuestionView(question: "Ease of Falling Asleep", value: $easeOfFallingAsleep)
-                SleepQualityQuestionView(question: "Quality of Deep Sleep", value: $qualityOfDeepSleep)
                 SleepQualityQuestionView(question: "Feeling Rested Upon Waking", value: $feelingRestedUponWaking)
+                
+                // Add the question about dreaming
+                HStack {
+                    Text("Did you dream?")
+                    Spacer()
+                    Picker("Dreamt", selection: $hadDream) {
+                        Text("Yes").tag(true)
+                        Text("No").tag(false)
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .frame(width: 100)
+                }
             }
-            
+
+            // Additional comments text field
+            TextField("Additional Comments", text: $additionalComments, onCommit: {
+                saveAdditionalComments()
+            })
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .padding()
+
             // Save button
             Button(action: {
                 saveSleepQuality()
+                saveAdditionalComments()
             }) {
                 Text("Save")
                     .padding()
@@ -77,7 +93,7 @@ struct SleepLogView: View {
                     .cornerRadius(10)
             }
             .padding(.horizontal)
-            
+
             Spacer()
         }
         .padding()
@@ -85,36 +101,66 @@ struct SleepLogView: View {
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
             updateSliderValues()
+            updateAdditionalComments()
         }
-        .onChange(of: selectedDate) {
+        .onChange(of: selectedDate) { _ in
             updateSliderValues()
+            updateAdditionalComments()
         }
     }
-        
+
     private func updateSliderValues() {
         if let ratings = viewModel.getSleepQuality(for: selectedDate) {
-            sleepQuality = ratings["Overall Sleep Quality"] ?? 0
-            easeOfFallingAsleep = ratings["Ease of Falling Asleep"] ?? 0
-            qualityOfDeepSleep = ratings["Quality of Deep Sleep"] ?? 0
-            feelingRestedUponWaking = ratings["Feeling Rested Upon Waking"] ?? 0
+            sleepDisturbances = ratings["Number of times you woke up"] as? Double ?? 0
+            easeOfFallingAsleep = ratings["Ease of Falling Asleep"] as? Double ?? 0
+            feelingRestedUponWaking = ratings["Feeling Rested Upon Waking"] as? Double ?? 0
+            hadDream = ratings["Did You Dream"] as? Bool ?? false
         } else {
-            sleepQuality = 0
+            sleepDisturbances = 0
             easeOfFallingAsleep = 0
-            qualityOfDeepSleep = 0
             feelingRestedUponWaking = 0
+            hadDream = false
         }
     }
-    
+
+    private func updateAdditionalComments() {
+        if let comments = viewModel.getSleepQuality(for: selectedDate)?["Additional Comments"] as? String {
+            additionalComments = comments
+        } else {
+            additionalComments = ""
+        }
+    }
+
     private func saveSleepQuality() {
-        let ratings: [String: Double] = [
-            "Overall Sleep Quality": sleepQuality,
+        let ratings: [String: Any] = [
+            "Number of times you woke up": sleepDisturbances,
             "Ease of Falling Asleep": easeOfFallingAsleep,
-            "Quality of Deep Sleep": qualityOfDeepSleep,
-            "Feeling Rested Upon Waking": feelingRestedUponWaking
+            "Did You Dream": hadDream,
+            "Feeling Rested Upon Waking": feelingRestedUponWaking,
+            "Additional Comments": additionalComments
         ]
         viewModel.saveSleepQuality(for: selectedDate, ratings: ratings)
     }
+
+    private func saveAdditionalComments() {
+        // Save additional comments for the selected date
+        if var ratings = viewModel.getSleepQuality(for: selectedDate) {
+            ratings["Additional Comments"] = additionalComments
+            viewModel.saveSleepQuality(for: selectedDate, ratings: ratings)
+        } else {
+            var ratings: [String: Any] = [
+                "Number of times you woke up": sleepDisturbances,
+                "Ease of Falling Asleep": easeOfFallingAsleep,
+                "Did You Dream": hadDream,
+                "Feeling Rested Upon Waking": feelingRestedUponWaking
+            ]
+            ratings["Additional Comments"] = additionalComments
+            viewModel.saveSleepQuality(for: selectedDate, ratings: ratings)
+        }
+    }
 }
+
+
 
 struct SleepQualityQuestionView: View {
     var question: String
