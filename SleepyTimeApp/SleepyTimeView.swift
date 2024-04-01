@@ -8,68 +8,100 @@
 import SwiftUI
 
 struct SleepModeView: View {
-    
+
     @Binding var isSleepModeActive: Bool // Binding to control presentation
     @Binding var alarmTime: Date
-    @Binding var isAlarmOn: Bool
     @State private var isAlarmTriggered = false
-    
+    @State private var snoozetime: TimeInterval = 300 // default snooze time is set to 5 minutes
     var body: some View {
-        
+    
         VStack {
-            if(isAlarmOn){
-                Text(alarmTime, style: .time)
-                    .font(.system(size: 52))
-                    .foregroundColor(.orange)
+            
+            Text("Sleep Mode-\(alarmTime, style: .time)")
+
+                .font(.title)
+
+                .foregroundColor(.orange)
+
+                .padding()
+
+            
+
+            Button(action: {
+
+                isSleepModeActive.toggle() // Toggle sleep mode
+
+            }) {
+
+                Text("Exit Sleep Mode")
+
+                    .font(.headline)
+
+                    .foregroundColor(.white)
+
                     .padding()
-            }else{
-                Text("Alarm is Off")
-                    .font(.system(size: 52))
-                    .foregroundColor(.orange)
-                    .padding()
+
             }
+
+            .frame(maxWidth: .infinity)
+
+            .background(Color.orange)
+
+            .cornerRadius(10)
+
+            .padding(.horizontal, 20)
             
             Button(action: {
-                isSleepModeActive.toggle() // Toggle sleep mode
+                SnoozeAlarm()
             }) {
-                Text("Exit Sleep Mode")
+                Text ("Snooze Alarm")
                     .font(.headline)
                     .foregroundColor(.white)
                     .padding()
             }
             .frame(maxWidth: .infinity)
+
             .background(Color.orange)
+
             .cornerRadius(10)
+
             .padding(.horizontal, 20)
-            Button("Stop") {
-                isAlarmTriggered.toggle()
-                Sounds.stopSound()
-                isSleepModeActive.toggle()
+            
+            
+            // User configurable snoozetime --> have to send to Setting view
+            
+            Slider(value: $snoozetime, in:60...600, step: 60) {
+                Text("Snooze Time: \(Int(snoozetime / 60)) minutes")
             }
-            .padding()
-            .background(Color.orange)
-            .foregroundColor(.white)
-            .cornerRadius(100)
-            .opacity(isAlarmTriggered ? 1 : 0) // Toggle button visibility
+            .padding (.horizontal, 20)
         }
         .onAppear(){
-            if(isAlarmOn){
-                alarmGoesOff()
-            }
+            alarmGoesOff()
         }
-        
+
     }
     
     func alarmGoesOff(){
-        let timer = Timer(fire: alarmTime, interval: 0, repeats: false) { _ in
-            triggerAlarm()
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+            if Date() >= alarmTime {
+                triggerAlarm()
+                isSleepModeActive.toggle()
+                timer.invalidate()
+            }
         }
-        RunLoop.main.add(timer, forMode: .common)
     }
     
     func triggerAlarm(){
-        Sounds.playsSounds(soundfile: "alarm.wav")
+        playSound()
         isAlarmTriggered = true
     }
     
+    func playSound(){
+        guard let soundURL = Bundle.main.url(forResource:"alarm", withExtension: "wav") else {return}
+        let player = AVPlayer(url:soundURL)
+        player.play()
+    }
+    func SnoozeAlarm(){
+        alarmTime = Date().addingTimeInterval(snoozetime)
+    }
 }
