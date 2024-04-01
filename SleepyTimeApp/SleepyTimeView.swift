@@ -61,12 +61,10 @@ struct SleepModeView: View {
     }
     
     func alarmGoesOff(){
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-            if Date() >= alarmTime {
-                triggerAlarm()
-                timer.invalidate()
-            }
+        let timer = Timer(fire: alarmTime, interval: 0, repeats: false) { _ in
+            triggerAlarm()
         }
+        RunLoop.main.add(timer, forMode: .common)
     }
     
     func triggerAlarm(){
@@ -75,4 +73,3 @@ struct SleepModeView: View {
     }
     
 }
-
