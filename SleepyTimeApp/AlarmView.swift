@@ -1,0 +1,58 @@
+//
+//  AlarmView.swift
+//  SleepyTimeApp
+//
+//  Created by Jared Rivard on 4/1/24.
+//
+
+import SwiftUI
+
+struct AlarmView: View {
+        @Binding var isSleepModeActive: Bool
+        @Binding var alarmTime: Date
+        @Binding var isAlarmOn: Bool
+        @Binding var isAlarmTriggered: Bool
+        @State private var snoozetime: TimeInterval = 60
+    var body: some View {
+            VStack {
+                Spacer()
+                Text("Wake up!")
+                    .font(.system(size: 75, weight: .bold))
+                
+                Button(action: {
+                    SnoozeAlarm()
+                    Sounds.stopSound()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        isAlarmTriggered.toggle()
+                    }
+                    
+                }) {
+                    Text("Snooze")
+                        .font(.system(size: 50))
+                        .padding()
+                        .background(Color.green)
+                        .cornerRadius(100)
+                }
+                
+                Spacer()
+                
+                Button(action: {
+                    Sounds.stopSound()
+                    isSleepModeActive.toggle()
+                }) {
+                    Text("Stop")
+                        .font(.system(size: 20))
+                        .padding()
+                }
+                
+                .padding(5)
+                .background(Color.red)
+                .foregroundColor(.white)
+                .cornerRadius(100)
+            }
+        }
+    
+    func SnoozeAlarm(){
+    alarmTime = Date().addingTimeInterval(snoozetime)
+    }
+}

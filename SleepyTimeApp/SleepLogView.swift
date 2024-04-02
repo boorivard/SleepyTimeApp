@@ -103,7 +103,7 @@ struct SleepLogView: View {
             updateSliderValues()
             updateAdditionalComments()
         }
-        .onChange(of: selectedDate) { _ in
+        .onChange(of: selectedDate) {
             updateSliderValues()
             updateAdditionalComments()
         }
