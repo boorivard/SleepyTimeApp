@@ -2,6 +2,7 @@
 //  SleepyTimeApp
 
 import SwiftUI
+// import Foundation
 
 class SleepLogViewModel: ObservableObject {
     @Published var sleepQualityRecords: [Date: [String: Any]] = [:]
@@ -57,13 +58,13 @@ struct SleepLogView: View {
 
             // Questions
             VStack(spacing: 20) {
-                SleepQualityQuestionView(question: "Number of times you woke up", value: $sleepDisturbances)
+                SleepQualityQuestionView(question: "Number of Times You Woke up", value: $sleepDisturbances)
                 SleepQualityQuestionView(question: "Ease of Falling Asleep", value: $easeOfFallingAsleep)
                 SleepQualityQuestionView(question: "Feeling Rested Upon Waking", value: $feelingRestedUponWaking)
                 
                 // Add the question about dreaming
                 HStack {
-                    Text("Did you dream?")
+                    Text("Did You Dream?")
                     Spacer()
                     Picker("Dreamt", selection: $hadDream) {
                         Text("Yes").tag(true)
@@ -111,7 +112,7 @@ struct SleepLogView: View {
 
     private func updateSliderValues() {
         if let ratings = viewModel.getSleepQuality(for: selectedDate) {
-            sleepDisturbances = ratings["Number of times you woke up"] as? Double ?? 0
+            sleepDisturbances = ratings["Number of Times You Woke up"] as? Double ?? 0
             easeOfFallingAsleep = ratings["Ease of Falling Asleep"] as? Double ?? 0
             feelingRestedUponWaking = ratings["Feeling Rested Upon Waking"] as? Double ?? 0
             hadDream = ratings["Did You Dream"] as? Bool ?? false
@@ -133,7 +134,7 @@ struct SleepLogView: View {
 
     private func saveSleepQuality() {
         let ratings: [String: Any] = [
-            "Number of times you woke up": sleepDisturbances,
+            "Number of Times You Woke up": sleepDisturbances,
             "Ease of Falling Asleep": easeOfFallingAsleep,
             "Did You Dream": hadDream,
             "Feeling Rested Upon Waking": feelingRestedUponWaking,
@@ -149,7 +150,7 @@ struct SleepLogView: View {
             viewModel.saveSleepQuality(for: selectedDate, ratings: ratings)
         } else {
             var ratings: [String: Any] = [
-                "Number of times you woke up": sleepDisturbances,
+                "Number of Times You Woke up": sleepDisturbances,
                 "Ease of Falling Asleep": easeOfFallingAsleep,
                 "Did You Dream": hadDream,
                 "Feeling Rested Upon Waking": feelingRestedUponWaking
