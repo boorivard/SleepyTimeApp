@@ -12,11 +12,11 @@ struct SplashScreen: View {
     @State private var scale: CGFloat = 0.8
     @State private var systemImageOpacity = 0.0
     @State private var imageOpacity = 1.0
-    
+    @ObservedObject private var manager = StatisticsManager(startTime: Date(), endTime: Date())
     var body: some View {
         ZStack {
             if isActive {
-                ContentView()
+                ContentView(manager:manager)
                     .transition(.scale)
             } else {
                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.black]), startPoint: .top, endPoint: .bottom)

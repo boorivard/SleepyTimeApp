@@ -13,7 +13,7 @@ struct SleepModeView: View {
         @Binding var alarmTime: Date
         @Binding var isAlarmOn: Bool
         @State private var isAlarmTriggered = false
-        
+        @ObservedObject var manager: StatisticsManager
         var body: some View {
             
             VStack {
@@ -42,7 +42,7 @@ struct SleepModeView: View {
                 .cornerRadius(10)
                 .padding(.horizontal, 20) : nil
                 if(isAlarmTriggered){
-                    AlarmView(isSleepModeActive : $isSleepModeActive, alarmTime: $alarmTime, isAlarmOn: $isAlarmOn, isAlarmTriggered: $isAlarmTriggered)
+                    AlarmView(isSleepModeActive : $isSleepModeActive, alarmTime: $alarmTime, isAlarmOn: $isAlarmOn, isAlarmTriggered: $isAlarmTriggered, manager:manager)
                 }
                 
             }

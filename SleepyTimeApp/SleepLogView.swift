@@ -24,7 +24,7 @@ struct SleepLogView: View {
     @State private var hadDream: Bool = false
     @State private var feelingRestedUponWaking: Double = 0
     @State private var additionalComments: String = ""
-
+    @ObservedObject var manager: StatisticsManager
     var body: some View {
         VStack(spacing: 20) {
             // Date selection controls
@@ -58,6 +58,7 @@ struct SleepLogView: View {
 
             // Questions
             VStack(spacing: 20) {
+                TimeIntervalView(timeInterval: manager.statistics.timeBetween())
                 SleepQualityQuestionView(question: "Number of Times You Woke up", value: $sleepDisturbances)
                 SleepQualityQuestionView(question: "Ease of Falling Asleep", value: $easeOfFallingAsleep)
                 SleepQualityQuestionView(question: "Feeling Rested Upon Waking", value: $feelingRestedUponWaking)

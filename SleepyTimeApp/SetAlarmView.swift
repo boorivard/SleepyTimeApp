@@ -76,8 +76,18 @@ struct SetAlarmView: View {
                         .onAppear {
                                                 UIDatePicker.appearance().minuteInterval = 1
                                             }
+                        
+                    
                     Button(action: {
+                        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: alarmTime)
+                                        
+                                        
+                        let adjustedAlarmTime = Calendar.current.date(from: components)!
                         setAlarm(at: alarmTime)
+                       /* if alarmTime < Date() {
+                                            alarmTime = Date().addingTimeInterval(86400)
+                                            // You can adjust this value according to your requirements
+                                        }*/
                         alarms.append(alarmTime)
                         isWheelHidden = true
                     }) {

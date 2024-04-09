@@ -13,6 +13,7 @@ struct AlarmView: View {
         @Binding var isAlarmOn: Bool
         @Binding var isAlarmTriggered: Bool
         @State private var snoozetime: TimeInterval = 60
+        @ObservedObject var manager: StatisticsManager
     var body: some View {
             VStack {
                 Spacer()
@@ -37,6 +38,7 @@ struct AlarmView: View {
                 Spacer()
                 
                 Button(action: {
+                    manager.statistics.setEndTime(Date())
                     Sounds.stopSound()
                     isSleepModeActive.toggle()
                 }) {
