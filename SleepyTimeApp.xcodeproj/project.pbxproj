@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7815BEE42BC5CD4F004D6DCE /* AlarmSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7815BEE32BC5CD4F004D6DCE /* AlarmSettingsView.swift */; };
 		D9152FE12B82AD5600BBD8FC /* SleepyTimeAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FE02B82AD5600BBD8FC /* SleepyTimeAppApp.swift */; };
 		D9152FE32B82AD5600BBD8FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FE22B82AD5600BBD8FC /* ContentView.swift */; };
 		D9152FE52B82AD5900BBD8FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9152FE42B82AD5900BBD8FC /* Assets.xcassets */; };
@@ -52,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7815BEE32BC5CD4F004D6DCE /* AlarmSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingsView.swift; sourceTree = "<group>"; };
 		D9152FDD2B82AD5600BBD8FC /* SleepyTimeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SleepyTimeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9152FE02B82AD5600BBD8FC /* SleepyTimeAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepyTimeAppApp.swift; sourceTree = "<group>"; };
 		D9152FE22B82AD5600BBD8FC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				D9A4CB0A2BBD3A2A0071B9D9 /* TimeIntervalView.swift */,
 				D9A4CB002BB706660071B9D9 /* StatsUIView.swift */,
 				D9E575802BA13BA3009C6023 /* Sounds.swift */,
+				7815BEE32BC5CD4F004D6DCE /* AlarmSettingsView.swift */,
 				D9152FE42B82AD5900BBD8FC /* Assets.xcassets */,
 				D9E84E342B9FFAA1006591B6 /* Sounds */,
 				D9152FE62B82AD5900BBD8FC /* Preview Content */,
@@ -330,6 +333,7 @@
 				D9A4CB052BBB05B20071B9D9 /* AlarmView.swift in Sources */,
 				D9A4CB012BB706660071B9D9 /* StatsUIView.swift in Sources */,
 				D9152FE32B82AD5600BBD8FC /* ContentView.swift in Sources */,
+				7815BEE42BC5CD4F004D6DCE /* AlarmSettingsView.swift in Sources */,
 				D9A4CAEC2BA7BB560071B9D9 /* SleepLogView.swift in Sources */,
 				D9152FE12B82AD5600BBD8FC /* SleepyTimeAppApp.swift in Sources */,
 				D9E575812BA13BA3009C6023 /* Sounds.swift in Sources */,
