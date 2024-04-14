@@ -4,6 +4,8 @@
 //
 //  Created by Jared Rivard on 3/17/24.
 //
+//  The View that is seen when the user enters sleepytime mode. Displays the time that the user has the alarm set for.
+
 
 import SwiftUI
 

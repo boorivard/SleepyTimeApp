@@ -1,5 +1,6 @@
 //  SleepLogView.swift
 //  SleepyTimeApp
+//  A view that contains the UI for a journal, displaying the time a user slept and other specific statistics. Also contains navigation between specific days and days on a calendar.
 
 import SwiftUI
 // import Foundation

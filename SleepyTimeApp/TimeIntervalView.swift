@@ -4,7 +4,8 @@
 //
 //  Created by Jared Rivard on 4/3/24.
 //
-
+//  A view that is used to display a time interval in terms of its hours and minutes. Used in the Journal to display houw long someone slept.
+//
 import SwiftUI
 
 struct TimeIntervalView: View {

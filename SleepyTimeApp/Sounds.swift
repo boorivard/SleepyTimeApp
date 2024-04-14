@@ -4,6 +4,8 @@
 //
 //  Created by Jared Rivard on 3/12/24.
 //
+// Sound Class that has functions to play and stop sounds from playing. Used when alarm is triggered. 
+
 
 import Foundation
 import AVFoundation

@@ -4,6 +4,7 @@
 //
 //  Created by Jared Rivard on 4/3/24.
 //
+//  A statisctics class that has accessors, mutators, and a function to find the time between a start time and end time. Used to calculate how long a user slept while using the app. Also contains an observable object that allows a single instance of statistics to be shared among views. 
 
 import Foundation
 

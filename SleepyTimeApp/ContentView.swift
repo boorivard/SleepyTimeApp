@@ -4,6 +4,7 @@
 //
 //  Created by Jared Rivard on 2/18/24.
 //
+//  The Main view when the user enters the app
 
 import SwiftUI
 import UserNotifications
@@ -44,7 +45,8 @@ struct ContentView: View {
                 Text("Set Alarm")
             }
 
-            /*StatisticsView()
+            //Note to reviewer, this is currently a work in progress :)
+           /* AlarmSettingsView(snoozeDuration: Binding<TimeInterval>, isSleepModeActive: <#Binding<Bool>#>, alarmTime: <#Binding<Date>#>, isAlarmOn: <#Binding<Bool>#>, isAlarmTriggered: <#Binding<Bool>#>)
                 .tabItem {
                     Image(systemName: "chart.bar.fill")
                     Text("Statistics")

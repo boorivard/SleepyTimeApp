@@ -4,6 +4,10 @@
 //
 //  Created by Nicholas Schiffer on 4/9/24.
 //
+//  View that consists of general settings for an alarm.
+//
+// NOTE TO REVIEWER: IN PROGRESS, NOT IN FINAL FORM
+
 import SwiftUI
 
 struct AlarmSettingsView: View {
@@ -94,8 +98,7 @@ struct AlarmSettingsView: View {
 
 
 
-
-/* struct AlarmSettingsView_Previews: PreviewProvider {
+ struct AlarmSettingsView_Previews: PreviewProvider {
     static var previews: some View {
         AlarmSettingsView(snoozeDuration: .constant(60),
                           isSleepModeActive: .constant(false),
@@ -105,6 +108,6 @@ struct AlarmSettingsView: View {
     }
     
     
-}  */
+}
 
 

@@ -4,6 +4,7 @@
 //
 //  Created by Jared Rivard on 4/1/24.
 //
+//  The view that is seen when the alarm is triggered.
 
 import SwiftUI
 

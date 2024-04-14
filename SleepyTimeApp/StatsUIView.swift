@@ -4,10 +4,13 @@
 //
 //  Created by Jared Rivard on 3/29/24.
 //
+// A stats class that is used to calculate and display the hours that someone has slept.
+// Note to reviewer: commented out as we are not using this anymore, but keeping the file for sake of reference.
+
 
 import SwiftUI
 
-struct alarmstats {
+/*struct alarmstats {
     var hour: Int
     var minute: Int
 }
@@ -86,5 +89,5 @@ class SleepWeekviewController: UIViewController {
         }
         
     }
-}
+}*/
 

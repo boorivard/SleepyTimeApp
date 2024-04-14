@@ -4,6 +4,7 @@
 //
 //  Created by Jared Rivard on 3/17/24.
 //
+//  The view that is used to set the alarm itself.
 
 import SwiftUI
 
@@ -81,12 +82,11 @@ struct SetAlarmView: View {
                     Button(action: {
                         let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: alarmTime)
                                         
-                                        
-                        let adjustedAlarmTime = Calendar.current.date(from: components)!
-                        setAlarm(at: alarmTime)
+                       // also some WIP stuff here!
+                       // let adjustedAlarmTime = Calendar.current.date(from: components)!
+                       // setAlarm(at: alarmTime)
                        /* if alarmTime < Date() {
                                             alarmTime = Date().addingTimeInterval(86400)
-                                            // You can adjust this value according to your requirements
                                         }*/
                         alarms.append(alarmTime)
                         isWheelHidden = true
@@ -111,40 +111,6 @@ struct SetAlarmView: View {
             .background(Color.gray.opacity(0.1)) // Background color for the hidden state
         }
     }
-    private func setAlarm(at time: Date) {
 
-        // Create notification content
-
-        let content = UNMutableNotificationContent()
-
-        content.title = "Alarm"
-
-        content.body = "Time to wake up!"
-
-        // Extract hour and minute components from the selected time
-
-        let components = Calendar.current.dateComponents([.hour, .minute], from: time)
-
-        // Create trigger for notification based on selected time
-
-        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
-
-
-
-        // Create request for notification
-        let request = UNNotificationRequest(identifier: "Alarm", content: content, trigger: trigger)
-
-        // Add or remove request based on alarm state
-        if isAlarmOn {
-            // Add request to notification center
-            UNUserNotificationCenter.current().add(request) { error in
-                if let error = error {
-                    print("Error scheduling notification: \(error.localizedDescription)")
-                } else {
-                    print("Alarm set for \(time)")
-                }
-            }
-        }
-    }
 }
 

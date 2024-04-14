@@ -4,6 +4,7 @@
 //
 //  Created by Jared Rivard on 3/1/24.
 //
+//  A splash screen that plays a quick animation letting the user into the app.
 
 import SwiftUI
 
