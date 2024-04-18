@@ -21,22 +21,22 @@ struct SetAlarmView: View {
                 if isWheelHidden {
                     if let latestAlarm = alarms.last{
                         HStack {
-                            Text( "Next Alarm:")
-                                .foregroundColor(colorScheme == .dark ? .white : .black)
-                                .padding()
-
+                        
                             Text("\(latestAlarm, style: .time)")
+                                .font(.largeTitle)
                                 .foregroundColor(colorScheme == .dark ? .white : .black)
                                 .padding()
-
-                            Spacer() // Pushes the toggle to the right
+                                
+                             Text("                ")
+                                .font(.headline)
 
                             Toggle(isOn: $isAlarmOn, label: {
-                                Text("Turn Alarm \(isAlarmOn ? "Off" : "On")")
+                                Text("\(isAlarmOn ? "Off" : "On")")
+                                    .font(.title)
                                     .foregroundColor(colorScheme == .dark ? .white : .black)
                             })
-
                             .padding()
+                            
                         }
 
                     }
