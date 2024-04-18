@@ -1,0 +1,89 @@
+// ui tests
+
+import XCTest
+
+class ContentViewUITests: XCTestCase {
+    
+    var app: XCUIApplication!
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app = XCUIApplication()
+        app.launch()
+    }
+
+    override func tearDownWithError() throws {
+        app = nil
+    }
+
+    func testNavigateToStatisticsView() throws {
+
+            // Access the "Statistics" tab
+            app.tabBars.buttons["Statistics"].tap()
+
+            // Verify if the Statistics view is displayed
+            XCTAssertTrue(app.staticTexts["Statistics"].exists)
+        }
+
+        func testNavigateToSleepLogView() throws {
+
+            // Access the "Sleep Log" tab
+            app.tabBars.buttons["Sleep Log"].tap()
+
+            // Verify if the Sleep Log view is displayed
+            XCTAssertTrue(app.staticTexts["Sleep Log"].exists)
+        }
+    
+    
+    
+    func testSetAlarmAndEnterSleepMode() throws {
+
+app.tabBars.buttons["Set Alarm"].tap()
+
+        // Verify the state 
+        XCTAssertFalse(app.staticTexts["Sleep Mode"].exists)
+        XCTAssertFalse(app.staticTexts["Alarm 1:"].exists)
+
+        // Adding a new alarm
+        app.buttons["Add Alarm"].tap()
+        app.datePickers["Select Alarm Time"].pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "7")
+        app.datePickers["Select Alarm Time"].pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "00")
+        app.buttons["Set Alarm"].tap()
+
+      
+        XCTAssertTrue(app.staticTexts["Alarm 1:"].exists)
+        app.buttons["Enter Sleep Mode"].tap()
+
+        XCTAssertTrue(app.staticTexts["Sleep Mode"].exists) 
+        app.buttons["Exit Sleep Mode"].tap()
+
+        XCTAssertFalse(app.staticTexts["Sleep Mode"].exists)
+    }
+
+    func testAddAlarm() throws
+
+        app.tabBars.buttons["Set Alarm"].tap()
+        app.buttons["Add Alarm"].tap()
+
+        app.datePickers["Select Alarm Time"].pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "8")
+        app.datePickers["Select Alarm Time"].pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "30")
+        app.buttons["Set Alarm"].tap()
+
+        XCTAssertTrue(app.staticTexts["Alarm 1:"].exists)
+    }
+
+    func testEnterSleepMode() throws {
+          
+           app.tabBars.buttons["Set Alarm"].tap()
+           XCTAssertFalse(app.staticTexts["Sleep Mode"].exists)
+
+           app.buttons["Enter Sleep Mode"].tap()
+
+           let sleepModeStaticText = app.staticTexts["Sleep Mode"]
+           XCTAssertTrue(sleepModeStaticText.waitForExistence(timeout: 15), "Sleep Mode view didn't appear")
+
+           app.buttons["Exit Sleep Mode"].tap()
+           XCTAssertFalse(sleepModeStaticText.exists, "Sleep Mode view didn't disappear")
+       }
+    
+   }
