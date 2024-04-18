@@ -13,7 +13,7 @@ struct SetAlarmView: View {
     @Binding var alarmTime: Date
     @Binding var isAlarmOn: Bool // Binding to track whether the alarm is on or off
     @State private var isWheelHidden = true
-    @State private var alarms: [Date] = []
+    @State private var alarms: [Date] = [] //better way to store data?
   
     var body: some View {
         VStack {
