@@ -27,7 +27,7 @@ struct SetAlarmView: View {
                                 .foregroundColor(colorScheme == .dark ? .white : .black)
                                 .padding()
                                 
-                             Text("                ")
+                             Text("                ") //space between the set alarm time and the "on/off" text
                                 .font(.headline)
 
                             Toggle(isOn: $isAlarmOn, label: {
