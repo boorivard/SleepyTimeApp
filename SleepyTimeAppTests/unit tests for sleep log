@@ -1,0 +1,81 @@
+//  App_implementationTests.swift
+//  unit tests for sleep log
+
+
+import XCTest
+@testable import App_implementation // project name will differ based on local os
+
+class SleepLogViewModelTests: XCTestCase {
+    
+    var viewModel: SleepLogViewModel!
+    
+    override func setUp() {
+        super.setUp()
+        viewModel = SleepLogViewModel()
+    }
+    
+    override func tearDown() {
+        viewModel = nil
+        super.tearDown()
+    }
+    
+    func testSaveAndGetSleepQuality() {
+        let date = Date()
+        let ratings: [String: Any] = [
+            "Number of times you woke up": 2,
+            "Ease of Falling Asleep": 3,
+            "Did You Dream": true,
+            "Feeling Rested Upon Waking": 4,
+            "Additional Comments": "Good sleep"
+        ]
+        
+        viewModel.saveSleepQuality(for: date, ratings: ratings)
+        
+        let savedRatings = viewModel.getSleepQuality(for: date)
+        
+        XCTAssertNotNil(savedRatings)
+        XCTAssertEqual(savedRatings?["Number of times you woke up"] as? Double, 2)
+        XCTAssertEqual(savedRatings?["Ease of Falling Asleep"] as? Double, 3)
+        XCTAssertEqual(savedRatings?["Did You Dream"] as? Bool, true)
+        XCTAssertEqual(savedRatings?["Feeling Rested Upon Waking"] as? Double, 4)
+        XCTAssertEqual(savedRatings?["Additional Comments"] as? String, "Good sleep")
+    }
+    
+    func testGetSleepQualityForNonExistentDate() {
+        let date = Date()
+        let savedRatings = viewModel.getSleepQuality(for: date)
+        
+        XCTAssertNil(savedRatings)
+    }
+    
+    func testSaveAndGetSleepQualityMultipleTimes() {
+        let date1 = Date()
+        let date2 = Calendar.current.date(byAdding: .day, value: 1, to: date1)!
+        
+        let ratings1: [String: Any] = [
+            "Number of times you woke up": 2,
+            "Ease of Falling Asleep": 3,
+            "Did You Dream": true,
+            "Feeling Rested Upon Waking": 4,
+            "Additional Comments": "Good sleep"
+        ]
+        viewModel.saveSleepQuality(for: date1, ratings: ratings1)
+        
+        let ratings2: [String: Any] = [
+            "Number of times you woke up": 1,
+            "Ease of Falling Asleep": 4,
+            "Did You Dream": false,
+            "Feeling Rested Upon Waking": 5,
+            "Additional Comments": "Excellent sleep"
+        ]
+        viewModel.saveSleepQuality(for: date2, ratings: ratings2)
+        
+        let savedRatings1 = viewModel.getSleepQuality(for: date1)
+        let savedRatings2 = viewModel.getSleepQuality(for: date2)
+        
+        XCTAssertNotNil(savedRatings1)
+        XCTAssertNotNil(savedRatings2)
+        XCTAssertEqual(savedRatings1?["Additional Comments"] as? String, "Good sleep")
+        XCTAssertEqual(savedRatings2?["Additional Comments"] as? String, "Excellent sleep")
+    }
+}

@@ -55,7 +55,7 @@ struct SleepModeView: View {
             }
             
         }
-        
+        //potentially rename
         func alarmGoesOff(){
             let timer = Timer(fire: alarmTime, interval: 0, repeats: false) { _ in
                 if(!isAlarmTriggered){

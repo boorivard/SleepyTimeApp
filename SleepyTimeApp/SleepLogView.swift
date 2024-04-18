@@ -18,6 +18,7 @@ class SleepLogViewModel: ObservableObject {
 }
 
 struct SleepLogView: View {
+    //maybe less variables
     @ObservedObject private var viewModel = SleepLogViewModel()
     @State private var selectedDate = Date()
     @State private var sleepDisturbances: Double = 0
@@ -183,6 +184,7 @@ struct SleepQualityQuestionView: View {
     }
 }
 
+//check to make sure used
 extension Date {
     var formattedDate: String {
         let dateFormatter = DateFormatter()
