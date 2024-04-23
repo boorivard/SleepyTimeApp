@@ -80,7 +80,7 @@ struct SetAlarmView: View {
                         
                     
                     Button(action: {
-                        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: alarmTime)
+                        _ = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: alarmTime)
                                         
                        // also some WIP stuff here!
                        // let adjustedAlarmTime = Calendar.current.date(from: components)!

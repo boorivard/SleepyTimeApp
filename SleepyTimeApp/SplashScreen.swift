@@ -21,8 +21,6 @@ struct SplashScreen: View {
                     .transition(.scale)
             } else {
                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.black]), startPoint: .top, endPoint: .bottom)
-            // Color.black.ignoresSafeArea()  //Alternate color choice: Plain Black
-                
                     .ignoresSafeArea()
                                    
                 VStack {
