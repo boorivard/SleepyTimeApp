@@ -1,18 +1,5 @@
-//
-//  AuthenticationView.swift
-//  SleepyTimeApp
-//
-//  Created by Justin Gherman on 4/18/24.
-//
-
-import FirebaseCore
-import FirebaseFirestore
-import FirebaseAuth
 import SwiftUI
-
-#Preview {
-    AuthenticationView()
-}
+import Firebase
 
 // ViewModel to handle authentication logic
 class AuthViewModel: ObservableObject {
@@ -38,24 +25,27 @@ class AuthViewModel: ObservableObject {
                 let user = authResult?.user
             }
         }
-        
-        func signOut() {
-            do {
-                try Auth.auth().signOut()
-            } catch {
-                print("Error signing out: \(error.localizedDescription)")
-            }
+    }
+    
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print("Error signing out: \(error.localizedDescription)")
         }
     }
 }
-    // AuthenticationView
-    struct AuthenticationView: View {
-        @EnvironmentObject var authViewModel: AuthViewModel
-        @State private var email = ""
-        @State private var password = ""
-        @State private var isSignUp = false
-        
-        var body: some View {
+
+// AuthenticationView
+struct AuthenticationView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
+    @State private var email = ""
+    @State private var password = ""
+    @State private var isSignUp = false
+    @State private var isLoggedIn = false
+    
+    var body: some View {
+        NavigationView {
             VStack {
                 TextField("Email", text: $email)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -68,12 +58,17 @@ class AuthViewModel: ObservableObject {
                         authViewModel.signUp(email: email, password: password) { error in
                             if let error = error {
                                 print("Error signing up: \(error.localizedDescription)")
+                            } else {
+                                // Handle successful sign-up (optional)
                             }
                         }
                     } else {
                         authViewModel.signIn(email: email, password: password) { error in
                             if let error = error {
                                 print("Error signing in: \(error.localizedDescription)")
+                            } else {
+                                // Handle successful sign-in
+                                isLoggedIn = true
                             }
                         }
                     }
@@ -81,6 +76,9 @@ class AuthViewModel: ObservableObject {
                     Text(isSignUp ? "Sign Up" : "Sign In")
                 }
                 .padding()
+                NavigationLink(destination: MainView(), isActive: $isLoggedIn) {
+                    EmptyView()
+                }
                 Button(action: {
                     isSignUp.toggle()
                 }) {
@@ -88,21 +86,44 @@ class AuthViewModel: ObservableObject {
                 }
             }
             .padding()
+            .navigationBarTitle("Authentication")
         }
     }
+}
+
+// SplashScreen to MainView
+
+
+struct MainView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     
-    // SplashScreen to MainView
-    struct MainView: View {
-        @EnvironmentObject var authViewModel: AuthViewModel
-        
-        var body: some View {
-            Text("Welcome!")
+    var body: some View {
+        NavigationView {
+            VStack {
+                Text("Welcome!")
+                    .padding()
+                NavigationLink(destination:SplashScreen()) {
+                    Text("Go to App")
+                }
                 .padding()
-            Button(action: {
-                
-            }) {
-                Text("Sign Out")
+                Button(action: {
+                    authViewModel.signOut()
+                }) {
+                    Text("Sign Out")
+                }
+                .padding()
             }
-            .padding()
+            .navigationBarTitle("Main View")
         }
     }
+}
+
+// Preview
+#if DEBUG
+struct AuthenticationView_Previews: PreviewProvider {
+    static var previews: some View {
+        AuthenticationView()
+    }
+}
+#endif
+
