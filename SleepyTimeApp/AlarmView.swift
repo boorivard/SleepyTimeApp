@@ -13,7 +13,8 @@ struct AlarmView: View {
         @Binding var alarmTime: Date
         @Binding var isAlarmOn: Bool
         @Binding var isAlarmTriggered: Bool
-        @State private var snoozetime: TimeInterval = 60
+        @Binding var sleepytimeTimer: Timer?
+        @Binding var snoozeDuration: TimeInterval
         @ObservedObject var manager: StatisticsManager
     var body: some View {
             VStack {
@@ -56,6 +57,6 @@ struct AlarmView: View {
         }
     
     func SnoozeAlarm(){
-    alarmTime = Date().addingTimeInterval(snoozetime)
+    alarmTime = Date().addingTimeInterval(snoozeDuration)
     }
 }

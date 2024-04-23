@@ -7,17 +7,16 @@
 //  The Main view when the user enters the app
 
 import SwiftUI
-import UserNotifications
 import AVFoundation
-
-
-
 
 struct ContentView: View {
     @State private var isAlarmOn = false // Track whether the alarm is on or off
     @State private var alarmTime = Date()
     @State private var isSleepModeActive = false // Track whether sleep mode is active
+    @State private var snoozeDuration: TimeInterval = 300
+    @State private var sleepytimeTimer: Timer?
     @ObservedObject var manager: StatisticsManager
+    
     
     var body: some View {
         TabView {
@@ -37,7 +36,7 @@ struct ContentView: View {
                 .cornerRadius(10)
                 .padding(.horizontal, 20)
                 .sheet(isPresented: $isSleepModeActive) {
-                    SleepModeView(isSleepModeActive: $isSleepModeActive, alarmTime: $alarmTime, isAlarmOn: $isAlarmOn, manager:manager)
+                    SleepModeView(isSleepModeActive: $isSleepModeActive, alarmTime: $alarmTime, isAlarmOn: $isAlarmOn, snoozeDuration: $snoozeDuration, sleepytimeTimer: $sleepytimeTimer, manager:manager)
                 }
             }
             .tabItem {
@@ -45,12 +44,11 @@ struct ContentView: View {
                 Text("Set Alarm")
             }
 
-            //Note to reviewer, this is currently a work in progress :)
-           /* AlarmSettingsView(snoozeDuration: Binding<TimeInterval>, isSleepModeActive: <#Binding<Bool>#>, alarmTime: <#Binding<Date>#>, isAlarmOn: <#Binding<Bool>#>, isAlarmTriggered: <#Binding<Bool>#>)
+            AlarmSettingsView(snoozeDuration: $snoozeDuration, sleepytimeTimer: $sleepytimeTimer)
                 .tabItem {
                     Image(systemName: "chart.bar.fill")
                     Text("Statistics")
-                }*/
+                }
 
             SleepLogView(manager:manager)
                .tabItem {

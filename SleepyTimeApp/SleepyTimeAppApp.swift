@@ -6,6 +6,7 @@
 //
 //  Function that runs the app
 
+
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth

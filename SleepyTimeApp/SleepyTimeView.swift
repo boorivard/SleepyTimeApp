@@ -14,6 +14,8 @@ struct SleepModeView: View {
         @Binding var isSleepModeActive: Bool // Binding to control presentation
         @Binding var alarmTime: Date
         @Binding var isAlarmOn: Bool
+        @Binding var snoozeDuration: TimeInterval
+        @Binding var sleepytimeTimer: Timer?
         @State private var isAlarmTriggered = false
         @ObservedObject var manager: StatisticsManager
         var body: some View {
@@ -44,7 +46,7 @@ struct SleepModeView: View {
                 .cornerRadius(10)
                 .padding(.horizontal, 20) : nil
                 if(isAlarmTriggered){
-                    AlarmView(isSleepModeActive : $isSleepModeActive, alarmTime: $alarmTime, isAlarmOn: $isAlarmOn, isAlarmTriggered: $isAlarmTriggered, manager:manager)
+                    AlarmView(isSleepModeActive : $isSleepModeActive, alarmTime: $alarmTime, isAlarmOn: $isAlarmOn, isAlarmTriggered: $isAlarmTriggered, sleepytimeTimer:$sleepytimeTimer, snoozeDuration: $snoozeDuration, manager: manager)
                 }
                 
             }
