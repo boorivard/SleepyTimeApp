@@ -17,20 +17,18 @@ struct AlarmSettingsView: View {
     
     var body: some View {
         VStack {
+            Spacer()
+            Text("Snooze Timer: \(Int(snoozeDuration)) seconds")
             Slider(value: $snoozeDuration, in: 10...600, step: 10) {
-                Text("Snooze Timer: \(Int(snoozeDuration)) seconds")
-            }
-            .padding()
-        
-        //picker for sleepytime mode delay
-        Picker("Select Delay", selection: $selectedDelay) {
-            Text("1 minute").tag(60)
-            Text("5 minutes").tag(300)
-            Text("10 minutes").tag(600)
-            Text("15 minutes").tag(900)
-            Text("20 minutes").tag(1200)
+            /*Text ("Snooze Duration: \(Int(snoozeDuration)) minutes")
+                .keyboardType(.numberPad)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()*/
+            
         }
-        
+            .padding()
+    
+            
         .pickerStyle(SegmentedPickerStyle())
         .padding()
         

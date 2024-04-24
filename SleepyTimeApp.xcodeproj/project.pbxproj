@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7815BEE42BC5CD4F004D6DCE /* AlarmSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7815BEE32BC5CD4F004D6DCE /* AlarmSettingsView.swift */; };
-		AF427F7E2BD19D900067FAEC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF427F7D2BD19D900067FAEC /* GoogleService-Info.plist */; };
+		782895E92BD83704001C7639 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 782895E82BD83704001C7639 /* GoogleService-Info.plist */; };
 		AF427F822BD1A87D0067FAEC /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF427F812BD1A87D0067FAEC /* AuthenticationView.swift */; };
 		D9152FE12B82AD5600BBD8FC /* SleepyTimeAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FE02B82AD5600BBD8FC /* SleepyTimeAppApp.swift */; };
 		D9152FE32B82AD5600BBD8FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FE22B82AD5600BBD8FC /* ContentView.swift */; };
@@ -56,7 +56,7 @@
 
 /* Begin PBXFileReference section */
 		7815BEE32BC5CD4F004D6DCE /* AlarmSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingsView.swift; sourceTree = "<group>"; };
-		AF427F7D2BD19D900067FAEC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		782895E82BD83704001C7639 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AF427F812BD1A87D0067FAEC /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		D9152FDD2B82AD5600BBD8FC /* SleepyTimeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SleepyTimeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9152FE02B82AD5600BBD8FC /* SleepyTimeAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepyTimeAppApp.swift; sourceTree = "<group>"; };
@@ -114,6 +114,7 @@
 		D9152FD42B82AD5600BBD8FC = {
 			isa = PBXGroup;
 			children = (
+				782895E82BD83704001C7639 /* GoogleService-Info.plist */,
 				D9152FDF2B82AD5600BBD8FC /* SleepyTimeApp */,
 				D9152FF02B82AD5A00BBD8FC /* SleepyTimeAppTests */,
 				D9152FFA2B82AD5A00BBD8FC /* SleepyTimeAppUITests */,
@@ -147,7 +148,6 @@
 				D9A4CB002BB706660071B9D9 /* StatsUIView.swift */,
 				D9E575802BA13BA3009C6023 /* Sounds.swift */,
 				7815BEE32BC5CD4F004D6DCE /* AlarmSettingsView.swift */,
-				AF427F7D2BD19D900067FAEC /* GoogleService-Info.plist */,
 				D9152FE42B82AD5900BBD8FC /* Assets.xcassets */,
 				D9E84E342B9FFAA1006591B6 /* Sounds */,
 				D9152FE62B82AD5900BBD8FC /* Preview Content */,
@@ -304,7 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9152FE82B82AD5900BBD8FC /* Preview Assets.xcassets in Resources */,
-				AF427F7E2BD19D900067FAEC /* GoogleService-Info.plist in Resources */,
+				782895E92BD83704001C7639 /* GoogleService-Info.plist in Resources */,
 				D9152FE52B82AD5900BBD8FC /* Assets.xcassets in Resources */,
 				D9E84E362B9FFB36006591B6 /* alarm.wav in Resources */,
 			);

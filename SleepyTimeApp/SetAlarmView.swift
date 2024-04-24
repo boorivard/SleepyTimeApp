@@ -25,13 +25,13 @@ struct SetAlarmView: View {
                             Text("\(latestAlarm, style: .time)")
                                 .font(.largeTitle)
                                 .foregroundColor(colorScheme == .dark ? .white : .black)
-                                .padding()
+                                .padding(15)
                                 
                              Text("                ") //space between the set alarm time and the "on/off" text
                                 .font(.headline)
 
                             Toggle(isOn: $isAlarmOn, label: {
-                                Text("\(isAlarmOn ? "Off" : "On")")
+                                Text("\(isAlarmOn ? "On" : "Off")")
                                     .font(.title)
                                     .foregroundColor(colorScheme == .dark ? .white : .black)
                             })

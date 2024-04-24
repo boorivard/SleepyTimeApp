@@ -34,6 +34,7 @@ struct AlarmView: View {
                         .font(.system(size: 50))
                         .padding()
                         .background(Color.green)
+                        .foregroundColor(.white)
                         .cornerRadius(100)
                 }
                 
