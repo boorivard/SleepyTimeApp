@@ -16,16 +16,21 @@ struct AlarmSettingsView: View {
     //defaulted sleepytime mode delay to 5 minutes
     @Binding var sleepytimeTimer: Timer?
     
+    @State private var userinputMinutes: Double = 0
+    
     var body: some View {
         VStack {
-            Text("Snooze Timer: \(Int(snoozeDuration)) minutes")
-                TextField ("Enter Snooze Duration (minutes)", value: $snoozeDuration, formatter: NumberFormatter())
-                    .keyboardType(.numberPad)
-                    .multilineTextAlignment(.center)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                    
+            Text("Snooze Timer: ")
+            TextField ("Enter Snooze Duration (minutes)", value: $userinputMinutes, formatter: NumberFormatter())
+                .keyboardType(.numberPad)
+                .multilineTextAlignment(.center)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            
+            Button ("Apply") {
+                snoozeDuration = userinputMinutes * 60
             }
+        }
             .padding()
             
             

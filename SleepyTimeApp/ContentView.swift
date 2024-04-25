@@ -15,6 +15,8 @@ struct ContentView: View {
     @State private var isSleepModeActive = false // Track whether sleep mode is active
     @State private var snoozeDuration: TimeInterval = 300
     @State private var sleepytimeTimer: Timer?
+    
+    
     @ObservedObject var manager: StatisticsManager
     
     
