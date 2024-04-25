@@ -43,7 +43,6 @@ struct ContentView: View {
                 Image(systemName: "alarm")
                 Text("Set Alarm")
             }
-
             SleepLogView(manager:manager)
                .tabItem {
                     Image(systemName: "moon.stars.fill")
