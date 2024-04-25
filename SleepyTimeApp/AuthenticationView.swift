@@ -43,57 +43,62 @@ struct AuthenticationView: View {
     @State private var password = ""
     @State private var isSignUp = false
     @Binding var isLoggedIn: Bool
-    
+    @State private var showAlert = false
+    @State private var showSUSAlert = false
+
     var body: some View {
-            VStack {
-                TextField("Email", text: $email)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                SecureField("Password", text: $password)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                Button(action: {
-                    if isSignUp {
-                        authViewModel.signUp(email: email, password: password) { error in
-                            if let error = error {
-                                print("Error signing up: \(error.localizedDescription)")
-                            } else {
-                                // Handle successful sign-up (optional)
-                            }
-                        }
-                            } else {
-                                authViewModel.signIn(email: email, password: password) { error in
-                            if let error = error {
-                                print("Error signing in: \(error.localizedDescription)")
-                            } else {
-                                isLoggedIn = true
-                            }
-                    }
-                                       }                }) {
-                    Text(isSignUp ? "Sign Up" : "Sign In")
-                }
+        VStack {
+            TextField("Email", text: $email)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
-                Button(action: {
-                    isSignUp.toggle()
-                }) {
-                    Text(isSignUp ? "Already have an account? Sign in" : "Don't have an account? Sign up")
+            SecureField("Password", text: $password)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            Button(action: {
+                if isSignUp {
+                    authViewModel.signUp(email: email, password: password) { error in
+                        handleSignUpResult(error: error)
+                    }
+                } else {
+                    authViewModel.signIn(email: email, password: password) { error in
+                        handleSignInResult(error: error)
+                    }
                 }
+            }) {
+                Text(isSignUp ? "Sign Up" : "Sign In")
             }
             .padding()
-            if(isLoggedIn){
-                SplashScreen()
-                    .transition(.scale)
+            Button(action: {
+                isSignUp.toggle()
+            }) {
+                Text(isSignUp ? "Already have an account? Sign in" : "Don't have an account? Sign up")
             }
         }
-}
+        .padding()
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Account not found"), message: Text("Email or Password is incorrect."), dismissButton: .default(Text("OK")))
+        }
+    }
 
-
-// Preview
-/*#if DEBUG
-struct AuthenticationView_Previews: PreviewProvider {
-    static var previews: some View {
-        AuthenticationView()
+    private func handleSignInResult(error: Error?) {
+            if let error = error {
+                if let errorCode = AuthErrorCode.Code(rawValue: error._code){
+                    showAlert = true
+                } else {
+                    print("Error signing in: \(error.localizedDescription)")
+                    // Handle other sign-in errors
+                }
+            } else {
+                isLoggedIn = true
+                // Handle successful sign-in
+            }
+        }
+    private func handleSignUpResult(error: Error?) {
+        if let error = error {
+            print("Error signing up: \(error.localizedDescription)")
+        
+        } else {
+          
+        }
     }
 }
-#endif*/
-
