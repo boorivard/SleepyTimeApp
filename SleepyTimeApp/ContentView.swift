@@ -16,8 +16,8 @@ struct ContentView: View {
     @State private var snoozeDuration: TimeInterval = 300
     @State private var sleepytimeTimer: Timer?
     
-    
     @ObservedObject var manager: StatisticsManager
+    
     
     
     var body: some View {
@@ -51,6 +51,7 @@ struct ContentView: View {
                     Text("Sleep Log")
                 }
             AlarmSettingsView(snoozeDuration: $snoozeDuration, sleepytimeTimer: $sleepytimeTimer)
+          
                 .tabItem {
                     Image(systemName: "gear")
                     Text("Settings")

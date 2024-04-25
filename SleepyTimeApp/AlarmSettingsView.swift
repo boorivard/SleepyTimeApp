@@ -17,6 +17,7 @@ struct AlarmSettingsView: View {
     @Binding var sleepytimeTimer: Timer?
     
     @State private var userinputMinutes: Double = 0
+    @State private var sleepmodedelay: TimeInterval = 10
     
     var body: some View {
         VStack {
@@ -27,15 +28,26 @@ struct AlarmSettingsView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             
+            
+        
+            Text ("Sleep Mode Delay: ")
+            TextField ("Enter Sleep Mode Delay (minutes)", value: $sleepmodedelay, formatter: NumberFormatter())
+                .keyboardType(.numberPad)
+                .multilineTextAlignment(.center)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            
             Button ("Apply") {
                 snoozeDuration = userinputMinutes * 60
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + sleepmodedelay) {
             }
-        }
+             }
             .padding()
-            
             
         }
     }
+}
     /*func startSleepytimeTimer( withDelay delay: TimeInterval) {
      sleepytimeTimer?.invalidate()  //invalidates any other timer
      sleepytimeTimer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false)
