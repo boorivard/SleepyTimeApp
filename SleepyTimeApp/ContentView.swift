@@ -45,9 +45,9 @@ struct ContentView: View {
             }
 
             AlarmSettingsView(snoozeDuration: $snoozeDuration, sleepytimeTimer: $sleepytimeTimer)
-                .tabItem {
-                    Image(systemName: "chart.bar.fill")
-                    Text("Settings")
+                .tabItem{
+                    Image(systemName: "alarm")
+                    Text("Set Alarm")
                 }
 
             SleepLogView(manager:manager)
