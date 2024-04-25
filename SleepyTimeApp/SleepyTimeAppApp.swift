@@ -23,14 +23,20 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 //Running the app
 @main struct SleepyTimeAppApp: App {
+    @State var isLoggedIn = false
     init() {
             FirebaseApp.configure() // Configure Firebase before anything else
         }
     @StateObject var authViewModel = AuthViewModel()
     var body: some Scene {
         WindowGroup {
-            AuthenticationView() // Show AuthenticationView initially
-                .environmentObject(authViewModel)
-        }
+                    if isLoggedIn {
+                        SplashScreen()
+                    }
+                    else {
+                        AuthenticationView(isLoggedIn: $isLoggedIn)
+                            .environmentObject(authViewModel)
+                    }
+                }
     }
 }

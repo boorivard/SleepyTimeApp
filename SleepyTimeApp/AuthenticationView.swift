@@ -3,7 +3,7 @@ import Firebase
 
 // ViewModel to handle authentication logic
 class AuthViewModel: ObservableObject {
-    @Published var isLoggedIn = false
+    @State var isLoggedIn = false
     
     func listenForAuthChanges() {
         Auth.auth().addStateDidChangeListener { (_, user) in
@@ -42,10 +42,9 @@ struct AuthenticationView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var isSignUp = false
-    @State private var isLoggedIn = false
+    @Binding var isLoggedIn: Bool
     
     var body: some View {
-        NavigationView {
             VStack {
                 TextField("Email", text: $email)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -62,23 +61,18 @@ struct AuthenticationView: View {
                                 // Handle successful sign-up (optional)
                             }
                         }
-                    } else {
-                        authViewModel.signIn(email: email, password: password) { error in
+                            } else {
+                                authViewModel.signIn(email: email, password: password) { error in
                             if let error = error {
                                 print("Error signing in: \(error.localizedDescription)")
                             } else {
-                                // Handle successful sign-in
                                 isLoggedIn = true
                             }
-                        }
                     }
-                }) {
+                                       }                }) {
                     Text(isSignUp ? "Sign Up" : "Sign In")
                 }
                 .padding()
-                NavigationLink(destination: MainView(), isActive: $isLoggedIn) {
-                    EmptyView()
-                }
                 Button(action: {
                     isSignUp.toggle()
                 }) {
@@ -86,44 +80,20 @@ struct AuthenticationView: View {
                 }
             }
             .padding()
-            .navigationBarTitle("Authentication")
-        }
-    }
-}
-
-// SplashScreen to MainView
-
-
-struct MainView: View {
-    @EnvironmentObject var authViewModel: AuthViewModel
-    
-    var body: some View {
-        NavigationView {
-            VStack {
-                Text("Welcome!")
-                    .padding()
-                NavigationLink(destination:SplashScreen()) {
-                    Text("Go to App")
-                }
-                .padding()
-                Button(action: {
-                    authViewModel.signOut()
-                }) {
-                    Text("Sign Out")
-                }
-                .padding()
+            if(isLoggedIn){
+                SplashScreen()
+                    .transition(.scale)
             }
-            .navigationBarTitle("Main View")
         }
-    }
 }
+
 
 // Preview
-#if DEBUG
+/*#if DEBUG
 struct AuthenticationView_Previews: PreviewProvider {
     static var previews: some View {
         AuthenticationView()
     }
 }
-#endif
+#endif*/
 
