@@ -43,17 +43,15 @@ struct ContentView: View {
                 Image(systemName: "alarm")
                 Text("Set Alarm")
             }
-
-            AlarmSettingsView(snoozeDuration: $snoozeDuration, sleepytimeTimer: $sleepytimeTimer)
-                .tabItem {
-                    Image(systemName: "chart.bar.fill")
-                    Text("Settings")
-                }
-
             SleepLogView(manager:manager)
                .tabItem {
                     Image(systemName: "moon.stars.fill")
                     Text("Sleep Log")
+                }
+            AlarmSettingsView(snoozeDuration: $snoozeDuration, sleepytimeTimer: $sleepytimeTimer)
+                .tabItem {
+                    Image(systemName: "gear")
+                    Text("Settings")
                 }
         }
     }
