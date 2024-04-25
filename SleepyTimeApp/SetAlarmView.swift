@@ -66,7 +66,6 @@ struct SetAlarmView: View {
                             Text(alarm, style: .time)
                         }
                     }
-
                     DatePicker("Select Alarm Time", selection: $alarmTime, displayedComponents: .hourAndMinute)
 
                         .labelsHidden()
@@ -80,14 +79,13 @@ struct SetAlarmView: View {
                         
                     
                     Button(action: {
-                        _ = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: alarmTime)
-                                        
-                       // also some WIP stuff here!
-                       // let adjustedAlarmTime = Calendar.current.date(from: components)!
-                       // setAlarm(at: alarmTime)
-                       /* if alarmTime < Date() {
+                        let calendar = Calendar.current
+                        let dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: alarmTime)
+                        let dateWithoutSeconds = calendar.date(from: dateComponents)
+                        alarmTime = dateWithoutSeconds ?? alarmTime
+                       if alarmTime < Date() {
                                             alarmTime = Date().addingTimeInterval(86400)
-                                        }*/
+                                        }
                         alarms.append(alarmTime)
                         isWheelHidden = true
                     }) {
