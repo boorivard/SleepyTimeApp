@@ -30,13 +30,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     @StateObject var authViewModel = AuthViewModel()
     var body: some Scene {
         WindowGroup {
-                    if isLoggedIn {
+                    /*if isLoggedIn {
                         SplashScreen()
                     }
                     else {
                         AuthenticationView(isLoggedIn: $isLoggedIn)
                             .environmentObject(authViewModel)
-                    }
+                    }*/
+            SplashScreen()
                 }
     }
 }
