@@ -1,24 +1,44 @@
-//  SleepLogView.swift
-//  SleepyTimeApp
-//  A view that contains the UI for a journal, displaying the time a user slept and other specific statistics. Also contains navigation between specific days and days on a calendar.
-
 import SwiftUI
-// import Foundation
+import Firebase
 
 class SleepLogViewModel: ObservableObject {
     @Published var sleepQualityRecords: [Date: [String: Any]] = [:]
+    private var db = Firestore.firestore()
     
     func saveSleepQuality(for date: Date, ratings: [String: Any]) {
         sleepQualityRecords[date] = ratings
+        saveToFirebase(for: date, ratings: ratings)
     }
     
     func getSleepQuality(for date: Date) -> [String: Any]? {
         return sleepQualityRecords[date]
     }
+    
+    private func saveToFirebase(for date: Date, ratings: [String: Any]) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateString = dateFormatter.string(from: date)
+        
+        // Create a new document reference for the date
+        let docRef = db.collection("sleepQuality").document(dateString)
+        
+        // Set each question's response as a separate field in the document
+        for (question, response) in ratings {
+            docRef.setData([
+                question: response
+            ], merge: true) { error in
+                if let error = error {
+                    print("Error adding document: \(error)")
+                } else {
+                    print("Document added with ID: \(dateString)")
+                }
+            }
+        }
+    }
 }
 
+
 struct SleepLogView: View {
-    //maybe less variables
     @ObservedObject private var viewModel = SleepLogViewModel()
     @State private var selectedDate = Date()
     @State private var sleepDisturbances: Double = 0
@@ -184,7 +204,6 @@ struct SleepQualityQuestionView: View {
     }
 }
 
-//check to make sure used
 extension Date {
     var formattedDate: String {
         let dateFormatter = DateFormatter()
