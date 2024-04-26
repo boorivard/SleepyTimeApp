@@ -17,6 +17,7 @@
 		D9152FF22B82AD5A00BBD8FC /* SleepyTimeAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FF12B82AD5A00BBD8FC /* SleepyTimeAppTests.swift */; };
 		D9152FFC2B82AD5A00BBD8FC /* SleepyTimeAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FFB2B82AD5A00BBD8FC /* SleepyTimeAppUITests.swift */; };
 		D9152FFE2B82AD5A00BBD8FC /* SleepyTimeAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FFD2B82AD5A00BBD8FC /* SleepyTimeAppUITestsLaunchTests.swift */; };
+		D968CD652BDB1B46008ABCD4 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = D968CD642BDB1B46008ABCD4 /* Database.swift */; };
 		D9A4CAEA2BA7BA8A0071B9D9 /* SleepyTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4CAE92BA7BA8A0071B9D9 /* SleepyTimeView.swift */; };
 		D9A4CAEC2BA7BB560071B9D9 /* SleepLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4CAEB2BA7BB560071B9D9 /* SleepLogView.swift */; };
 		D9A4CAF22BA7BD190071B9D9 /* SetAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4CAF12BA7BD190071B9D9 /* SetAlarmView.swift */; };
@@ -68,6 +69,7 @@
 		D9152FF72B82AD5A00BBD8FC /* SleepyTimeAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SleepyTimeAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9152FFB2B82AD5A00BBD8FC /* SleepyTimeAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepyTimeAppUITests.swift; sourceTree = "<group>"; };
 		D9152FFD2B82AD5A00BBD8FC /* SleepyTimeAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepyTimeAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D968CD642BDB1B46008ABCD4 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		D9A4CAE92BA7BA8A0071B9D9 /* SleepyTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepyTimeView.swift; sourceTree = "<group>"; };
 		D9A4CAEB2BA7BB560071B9D9 /* SleepLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepLogView.swift; sourceTree = "<group>"; };
 		D9A4CAF12BA7BD190071B9D9 /* SetAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAlarmView.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				D9A4CAE92BA7BA8A0071B9D9 /* SleepyTimeView.swift */,
 				D9A4CB042BBB05B20071B9D9 /* AlarmView.swift */,
 				D9A4CAEB2BA7BB560071B9D9 /* SleepLogView.swift */,
+				D968CD642BDB1B46008ABCD4 /* Database.swift */,
 				D9A4CB082BBD36D40071B9D9 /* Statistics.swift */,
 				D9A4CB0A2BBD3A2A0071B9D9 /* TimeIntervalView.swift */,
 				D9A4CB002BB706660071B9D9 /* StatsUIView.swift */,
@@ -345,6 +348,7 @@
 				D9A4CAEC2BA7BB560071B9D9 /* SleepLogView.swift in Sources */,
 				D9152FE12B82AD5600BBD8FC /* SleepyTimeAppApp.swift in Sources */,
 				D9E575812BA13BA3009C6023 /* Sounds.swift in Sources */,
+				D968CD652BDB1B46008ABCD4 /* Database.swift in Sources */,
 				D9A4CAF22BA7BD190071B9D9 /* SetAlarmView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

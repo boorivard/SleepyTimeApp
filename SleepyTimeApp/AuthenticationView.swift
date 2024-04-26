@@ -1,5 +1,6 @@
 import SwiftUI
 import Firebase
+import FirebaseFirestore
 
 // ViewModel to handle authentication logic
 class AuthViewModel: ObservableObject {
@@ -81,18 +82,17 @@ struct AuthenticationView: View {
     }
 
     private func handleSignInResult(error: Error?) {
-            if let error = error {
-                if let errorCode = AuthErrorCode.Code(rawValue: error._code){
-                    showAlert = true
+                if let error = error {
+                    if let errorCode = AuthErrorCode.Code(rawValue: error._code){
+                        showAlert = true
+                    } else {
+                        print("Error signing in: \(error.localizedDescription)")
+                    }
                 } else {
-                    print("Error signing in: \(error.localizedDescription)")
-                    // Handle other sign-in errors
+                    Database.initDB()
+                    isLoggedIn = true
                 }
-            } else {
-                isLoggedIn = true
-                // Handle successful sign-in
             }
-        }
     private func handleSignUpResult(error: Error?) {
         if let error = error {
             print("Error signing up: \(error.localizedDescription)")

@@ -1,39 +1,17 @@
 import SwiftUI
 import Firebase
+import FirebaseAuth
 
 class SleepLogViewModel: ObservableObject {
     @Published var sleepQualityRecords: [Date: [String: Any]] = [:]
-    private var db = Firestore.firestore()
+        // You can use this UID to create personalized Firestore collections or perform other user-specific tasks
     
     func saveSleepQuality(for date: Date, ratings: [String: Any]) {
         sleepQualityRecords[date] = ratings
-        saveToFirebase(for: date, ratings: ratings)
     }
     
     func getSleepQuality(for date: Date) -> [String: Any]? {
         return sleepQualityRecords[date]
-    }
-    
-    private func saveToFirebase(for date: Date, ratings: [String: Any]) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let dateString = dateFormatter.string(from: date)
-        
-        // Create a new document reference for the date
-        let docRef = db.collection("sleepQuality").document(dateString)
-        
-        // Set each question's response as a separate field in the document
-        for (question, response) in ratings {
-            docRef.setData([
-                question: response
-            ], merge: true) { error in
-                if let error = error {
-                    print("Error adding document: \(error)")
-                } else {
-                    print("Document added with ID: \(dateString)")
-                }
-            }
-        }
     }
 }
 
@@ -211,4 +189,3 @@ extension Date {
         return dateFormatter.string(from: self)
     }
 }
-

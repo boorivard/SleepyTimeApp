@@ -8,7 +8,6 @@
 
 
 import FirebaseCore
-import FirebaseFirestore
 import FirebaseAuth
 import SwiftUI
 
@@ -25,19 +24,20 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main struct SleepyTimeAppApp: App {
     @State var isLoggedIn = false
     init() {
-            FirebaseApp.configure() // Configure Firebase before anything else
+            FirebaseApp.configure()// Configure Firebase before anything else
+        
         }
+    
     @StateObject var authViewModel = AuthViewModel()
     var body: some Scene {
         WindowGroup {
-                    /*if isLoggedIn {
+                    if isLoggedIn {
                         SplashScreen()
                     }
                     else {
                         AuthenticationView(isLoggedIn: $isLoggedIn)
                             .environmentObject(authViewModel)
-                    }*/
-            SplashScreen()
+                    }
                 }
     }
 }
