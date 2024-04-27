@@ -19,7 +19,6 @@ struct ContentView: View {
     @ObservedObject var manager: StatisticsManager
     
     
-    
     var body: some View {
         TabView {
             VStack { // Embedding SetAlarmView and SleepModeView in a VStack

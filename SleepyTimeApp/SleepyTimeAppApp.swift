@@ -22,7 +22,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 //Running the app
 @main struct SleepyTimeAppApp: App {
-    @State var isLoggedIn = false
+    @State public var isLoggedIn = false
     init() {
             FirebaseApp.configure()// Configure Firebase before anything else
         
