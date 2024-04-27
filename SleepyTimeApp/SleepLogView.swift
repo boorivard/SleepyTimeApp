@@ -4,13 +4,15 @@ import FirebaseAuth
 
 class SleepLogViewModel: ObservableObject {
     @Published var sleepQualityRecords: [Date: [String: Any]] = [:]
-        // You can use this UID to create personalized Firestore collections or perform other user-specific tasks
-    
     func saveSleepQuality(for date: Date, ratings: [String: Any]) {
         sleepQualityRecords[date] = ratings
+        Database.updateDocument(date: date, ratings: ratings)
     }
     
     func getSleepQuality(for date: Date) -> [String: Any]? {
+        Database.readDocument(for: date) {data in
+            self.sleepQualityRecords[date] = data
+        }
         return sleepQualityRecords[date]
     }
 }
@@ -24,90 +26,107 @@ struct SleepLogView: View {
     @State private var hadDream: Bool = false
     @State private var feelingRestedUponWaking: Double = 0
     @State private var additionalComments: String = ""
+    @State private var isLoading = true
     @ObservedObject var manager: StatisticsManager
     var body: some View {
-        VStack(spacing: 20) {
-            // Date selection controls
-            HStack {
-                // Left arrow button
-                Button(action: {
-                    selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate) ?? Date()
-                    updateSliderValues()
-                    updateAdditionalComments()
-                }) {
-                    Image(systemName: "arrow.left")
-                        .foregroundColor(.blue)
+        if(!isLoading){
+            VStack(spacing: 20) {
+                // Date selection controls
+                HStack {
+                    // Left arrow button
+                    Button(action: {
+                        selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate) ?? Date()
+                        updateSliderValues()
+                        updateAdditionalComments()
+                    }) {
+                        Image(systemName: "arrow.left")
+                            .foregroundColor(.blue)
+                    }
+                    
+                    // Date picker
+                    DatePicker("", selection: $selectedDate, displayedComponents: .date)
+                        .datePickerStyle(CompactDatePickerStyle())
+                        .onChange(of: selectedDate) {
+                            updateSliderValues()
+                            updateAdditionalComments()
+                        }
+                    
+                    // Right arrow button
+                    Button(action: {
+                        selectedDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate) ?? Date()
+                        updateSliderValues()
+                        updateAdditionalComments()
+                    }) {
+                        Image(systemName: "arrow.right")
+                            .foregroundColor(.blue)
+                    }
                 }
-
-                // Date picker
-                DatePicker("", selection: $selectedDate, displayedComponents: .date)
-                    .datePickerStyle(CompactDatePickerStyle())
-
-                // Right arrow button
-                Button(action: {
-                    selectedDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate) ?? Date()
-                    updateSliderValues()
-                    updateAdditionalComments()
-                }) {
-                    Image(systemName: "arrow.right")
-                        .foregroundColor(.blue)
+                .padding()
+                .background(Color(UIColor.systemBackground))
+                
+                // Questions
+                VStack(spacing: 20) {
+                    TimeIntervalView(timeInterval: manager.statistics.timeBetween())
+                    SleepQualityQuestionView(question: "Number of Times You Woke up", value: $sleepDisturbances)
+                    SleepQualityQuestionView(question: "Ease of Falling Asleep", value: $easeOfFallingAsleep)
+                    SleepQualityQuestionView(question: "Feeling Rested Upon Waking", value: $feelingRestedUponWaking)
+                    
+                    // Add the question about dreaming
+                    HStack {
+                        Text("Did You Dream?")
+                        Spacer()
+                        Picker("Dreamt", selection: $hadDream) {
+                            Text("Yes").tag(true)
+                            Text("No").tag(false)
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .frame(width: 100)
+                    }
                 }
+                
+                // Additional comments text field
+                TextField("Additional Comments", text: $additionalComments, onCommit: {
+                    saveAdditionalComments()
+                })
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+                
+                // Save button
+                Button(action: {
+                    saveSleepQuality()
+                    saveAdditionalComments()
+                }) {
+                    Text("Save")
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                }
+                .padding(.horizontal)
+                
+                Spacer()
             }
             .padding()
             .background(Color(UIColor.systemBackground))
-
-            // Questions
-            VStack(spacing: 20) {
-                TimeIntervalView(timeInterval: manager.statistics.timeBetween())
-                SleepQualityQuestionView(question: "Number of Times You Woke up", value: $sleepDisturbances)
-                SleepQualityQuestionView(question: "Ease of Falling Asleep", value: $easeOfFallingAsleep)
-                SleepQualityQuestionView(question: "Feeling Rested Upon Waking", value: $feelingRestedUponWaking)
-                
-                // Add the question about dreaming
-                HStack {
-                    Text("Did You Dream?")
-                    Spacer()
-                    Picker("Dreamt", selection: $hadDream) {
-                        Text("Yes").tag(true)
-                        Text("No").tag(false)
+            .edgesIgnoringSafeArea(.bottom)
+            .onAppear {
+                updateSliderValues()
+                updateAdditionalComments()
+            }
+            .onChange(of: selectedDate) {
+                updateSliderValues()
+                updateAdditionalComments()
+            }
+        }else{
+                    ZStack {
+                        ProgressView()
+                        .scaleEffect(2.0) // Adjust the size as needed
                     }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .frame(width: 100)
-                }
-            }
-
-            // Additional comments text field
-            TextField("Additional Comments", text: $additionalComments, onCommit: {
-                saveAdditionalComments()
-            })
-            .textFieldStyle(RoundedBorderTextFieldStyle())
-            .padding()
-
-            // Save button
-            Button(action: {
-                saveSleepQuality()
-                saveAdditionalComments()
-            }) {
-                Text("Save")
-                    .padding()
-                    .foregroundColor(.white)
-                    .background(Color.blue)
-                    .cornerRadius(10)
-            }
-            .padding(.horizontal)
-
-            Spacer()
-        }
-        .padding()
-        .background(Color(UIColor.systemBackground))
-        .edgesIgnoringSafeArea(.bottom)
-        .onAppear {
-            updateSliderValues()
-            updateAdditionalComments()
-        }
-        .onChange(of: selectedDate) {
-            updateSliderValues()
-            updateAdditionalComments()
+                    .onAppear {
+                            updateSliderValues()
+                            updateAdditionalComments()
+                            isLoading = false;
+                    }
         }
     }
 

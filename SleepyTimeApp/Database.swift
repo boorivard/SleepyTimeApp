@@ -37,11 +37,60 @@ class Database{
                         }
                     }
                 }
-            }   
+            }
         }
     }
     
-    static func updateDocument(){
-        
+    static func updateDocument(date: Date, ratings: [String: Any]){
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateString = dateFormatter.string(from: date)
+        if let user = Auth.auth().currentUser {
+            let uid = user.uid
+            
+            let docRef = db.collection(uid).document(dateString)
+            docRef.setData(ratings) { error in
+                    if let error = error {
+                        print("Error adding document: \(error)")
+                    } else {
+                        print("Document added with ID: \(docRef.documentID)")
+                    }
+                }
+        }
     }
+    
+    static func readDocument(for date: Date, completion: @escaping ([String: Any]) -> Void) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateString = dateFormatter.string(from: date)
+        
+        if let user = Auth.auth().currentUser {
+            let uid = user.uid
+            
+            let docRef = db.collection(uid).document(dateString)
+                let unsubscribe = docRef.addSnapshotListener { documentSnapshot, error in
+                    if let error = error {
+                        print("Error fetching document: \(error)")
+                        return
+                    }
+                    guard let document = documentSnapshot else {
+                        print("Document does not exist")
+                        return
+                    }
+                    if document.exists {
+                        print("Current data: \(document.data())")
+                        completion(document.data() ?? [:])
+                        
+                    } else {
+                        print("Document does not exist")
+                        completion([:])
+                    }
+                }
+            }
+            else {
+            print("User not authenticated")
+            completion([:]) // Return an empty dictionary
+        }
+    }
+
 }
