@@ -12,6 +12,7 @@ import SwiftUI
 
 struct AlarmSettingsView: View {
     @Binding var snoozeDuration: TimeInterval
+    @Binding var sleepyTimeDelay: TimeInterval
     @State private var selectedDelay: TimeInterval = 5
     //defaulted sleepytime mode delay to 5 minutes
     @Binding var sleepytimeTimer: Timer?
@@ -39,10 +40,8 @@ struct AlarmSettingsView: View {
             
             Button ("Apply") {
                 snoozeDuration = userinputMinutes * 60
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + sleepmodedelay) {
-            }
-             }
+                sleepyTimeDelay = sleepmodedelay * 60
+                             }
             .padding()
             
         }

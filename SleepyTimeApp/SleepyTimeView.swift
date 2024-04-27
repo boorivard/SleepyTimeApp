@@ -52,19 +52,19 @@ struct SleepModeView: View {
             }
             .onAppear(){
                     if(isAlarmOn){
-                        alarmGoesOff()
+                        alarmStarts()
                     }
             }
             
         }
-        //potentially rename
-        func alarmGoesOff(){
+
+        func alarmStarts(){
             let timer = Timer(fire: alarmTime, interval: 0, repeats: false) { _ in
                 if(!isAlarmTriggered){
                         triggerAlarm()
                     }
                 if(isSleepModeActive){
-                    alarmGoesOff()
+                    alarmStarts()
                 }
             }
             RunLoop.main.add(timer, forMode: .common)

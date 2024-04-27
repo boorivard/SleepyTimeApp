@@ -15,7 +15,7 @@ struct ContentView: View {
     @State private var isSleepModeActive = false // Track whether sleep mode is active
     @State private var snoozeDuration: TimeInterval = 300
     @State private var sleepytimeTimer: Timer?
-    
+    @State private var sleepyTimeDelay: TimeInterval = 600
     @ObservedObject var manager: StatisticsManager
     
     
@@ -25,8 +25,11 @@ struct ContentView: View {
             VStack { // Embedding SetAlarmView and SleepModeView in a VStack
                SetAlarmView(alarmTime: $alarmTime, isAlarmOn: $isAlarmOn)
                 Button(action: {
-                    manager.statistics.setStartTime(Date())
                     isSleepModeActive.toggle() // Toggle sleep mode
+                    DispatchQueue.main.asyncAfter(deadline: .now() + sleepyTimeDelay) {
+                        manager.statistics.startTime = Date()
+                }
+
                 }) {
                     Text("Enter Sleep Mode")
                         .font(.headline)
@@ -50,7 +53,7 @@ struct ContentView: View {
                     Image(systemName: "moon.stars.fill")
                     Text("Sleep Log")
                 }
-            AlarmSettingsView(snoozeDuration: $snoozeDuration, sleepytimeTimer: $sleepytimeTimer)
+            AlarmSettingsView(snoozeDuration: $snoozeDuration, sleepyTimeDelay: $sleepyTimeDelay, sleepytimeTimer: $sleepytimeTimer)
           
                 .tabItem {
                     Image(systemName: "gear")

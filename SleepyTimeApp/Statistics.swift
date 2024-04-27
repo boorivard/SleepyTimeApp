@@ -39,7 +39,11 @@ class Statistics: ObservableObject{
         
         // Function to calculate the time interval between endTime and startTime
         func timeBetween() -> TimeInterval {
-            return endTime.timeIntervalSince(startTime)
+            if(endTime.timeIntervalSince(startTime) > 0){
+                return endTime.timeIntervalSince(startTime)
+            }else{
+                return 0
+            }
         }
 }
 
