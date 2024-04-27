@@ -20,11 +20,7 @@ class AuthViewModel: ObservableObject {
     
     func signUp(email: String, password: String, completion: @escaping (Error?) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            if let error = error {
-                print("Error creating user : \(error.localizedDescription)")
-            } else {
-                let user = authResult?.user
-            }
+            completion(error)
         }
     }
     
@@ -45,7 +41,8 @@ struct AuthenticationView: View {
     @State private var isSignUp = false
     @Binding var isLoggedIn: Bool
     @State private var showAlert = false
-
+    @State var errorTitle: String = "Default_Title"
+    @State var errorMessage: String = "Default_Message"
     var body: some View {
         VStack {
             TextField("Email", text: $email)
@@ -76,28 +73,34 @@ struct AuthenticationView: View {
         }
         .padding()
         .alert(isPresented: $showAlert) {
-            Alert(title: Text("Account not found"), message: Text("Email or Password is incorrect."), dismissButton: .default(Text("OK")))
+            Alert(title: Text(errorTitle), message: Text(errorMessage), dismissButton: .default(Text("OK")))
         }
     }
-
+    
     private func handleSignInResult(error: Error?) {
-                if let error = error {
-                    if let errorCode = AuthErrorCode.Code(rawValue: error._code){
-                        showAlert = true
-                    } else {
-                        print("Error signing in: \(error.localizedDescription)")
-                    }
-                } else {
-                    Database.initDB()
-                    isLoggedIn = true
-                }
+        if let error = error {
+            if let errorCode = AuthErrorCode.Code(rawValue: error._code){
+                errorTitle = "Account Not Found"
+                errorMessage = "Email or Password is incorrect."
+                showAlert = true
+            } else {
+                print("Error signing in: \(error.localizedDescription)")
             }
+        } else {
+            Database.initDB()
+            isLoggedIn = true
+        }
+    }
     private func handleSignUpResult(error: Error?) {
         if let error = error {
-            print("Error signing up: \(error.localizedDescription)")
-            
-        } else {
-          
-        }
+                errorTitle = "Error Signing Up"
+                errorMessage = "\(error.localizedDescription)"
+                showAlert = true
+            }
+            else{
+                errorTitle = "Account Successfully Created"
+                errorMessage = "Please Sign In"
+                showAlert = true
+            }
     }
 }
