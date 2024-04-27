@@ -45,7 +45,6 @@ struct AuthenticationView: View {
     @State private var isSignUp = false
     @Binding var isLoggedIn: Bool
     @State private var showAlert = false
-    @State private var showSUSAlert = false
 
     var body: some View {
         VStack {
@@ -96,7 +95,7 @@ struct AuthenticationView: View {
     private func handleSignUpResult(error: Error?) {
         if let error = error {
             print("Error signing up: \(error.localizedDescription)")
-        
+            
         } else {
           
         }

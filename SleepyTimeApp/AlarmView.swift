@@ -42,6 +42,7 @@ struct AlarmView: View {
                 
                 Button(action: {
                     manager.statistics.setEndTime(Date())
+                    Database.updateDocument(date: Date(), ratings: ["Time That You Slept": manager.statistics.timeBetween()])
                     Sounds.stopSound()
                     isSleepModeActive.toggle()
                 }) {

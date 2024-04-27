@@ -10,10 +10,10 @@ class SleepLogViewModel: ObservableObject {
     }
     
     func getSleepQuality(for date: Date) -> [String: Any]? {
-        Database.readDocument(for: date) {data in
-            self.sleepQualityRecords[date] = data
-        }
-        return sleepQualityRecords[date]
+            Database.readDocument(for: date) {data in
+                self.sleepQualityRecords[date] = data
+            }
+            return sleepQualityRecords[date]
     }
 }
 
@@ -27,6 +27,7 @@ struct SleepLogView: View {
     @State private var feelingRestedUponWaking: Double = 0
     @State private var additionalComments: String = ""
     @State private var isLoading = true
+    @State private var sleepInterval: Double = 0
     @ObservedObject var manager: StatisticsManager
     var body: some View {
         if(!isLoading){
@@ -66,7 +67,7 @@ struct SleepLogView: View {
                 
                 // Questions
                 VStack(spacing: 20) {
-                    TimeIntervalView(timeInterval: manager.statistics.timeBetween())
+                    TimeIntervalView(timeInterval: TimeInterval(sleepInterval))
                     SleepQualityQuestionView(question: "Number of Times You Woke up", value: $sleepDisturbances)
                     SleepQualityQuestionView(question: "Ease of Falling Asleep", value: $easeOfFallingAsleep)
                     SleepQualityQuestionView(question: "Feeling Rested Upon Waking", value: $feelingRestedUponWaking)
@@ -131,16 +132,19 @@ struct SleepLogView: View {
     }
 
     private func updateSliderValues() {
-        if let ratings = viewModel.getSleepQuality(for: selectedDate) {
-            sleepDisturbances = ratings["Number of Times You Woke up"] as? Double ?? 0
-            easeOfFallingAsleep = ratings["Ease of Falling Asleep"] as? Double ?? 0
-            feelingRestedUponWaking = ratings["Feeling Rested Upon Waking"] as? Double ?? 0
-            hadDream = ratings["Did You Dream"] as? Bool ?? false
-        } else {
-            sleepDisturbances = 0
-            easeOfFallingAsleep = 0
-            feelingRestedUponWaking = 0
-            hadDream = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            if let ratings = viewModel.getSleepQuality(for: selectedDate) {
+                sleepInterval = ratings["Time That You Slept"] as? Double ?? 0
+                sleepDisturbances = ratings["Number of Times You Woke up"] as? Double ?? 0
+                easeOfFallingAsleep = ratings["Ease of Falling Asleep"] as? Double ?? 0
+                feelingRestedUponWaking = ratings["Feeling Rested Upon Waking"] as? Double ?? 0
+                hadDream = ratings["Did You Dream"] as? Bool ?? false
+            } else {
+                sleepDisturbances = 0
+                easeOfFallingAsleep = 0
+                feelingRestedUponWaking = 0
+                hadDream = false
+            }
         }
     }
 
@@ -154,6 +158,7 @@ struct SleepLogView: View {
 
     private func saveSleepQuality() {
         let ratings: [String: Any] = [
+            "Time That You Slept" : sleepInterval,
             "Number of Times You Woke up": sleepDisturbances,
             "Ease of Falling Asleep": easeOfFallingAsleep,
             "Did You Dream": hadDream,
@@ -170,6 +175,7 @@ struct SleepLogView: View {
             viewModel.saveSleepQuality(for: selectedDate, ratings: ratings)
         } else {
             var ratings: [String: Any] = [
+                "Time That You Slept" : sleepInterval,
                 "Number of Times You Woke up": sleepDisturbances,
                 "Ease of Falling Asleep": easeOfFallingAsleep,
                 "Did You Dream": hadDream,
