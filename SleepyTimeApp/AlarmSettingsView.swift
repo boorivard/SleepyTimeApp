@@ -27,23 +27,22 @@ struct AlarmSettingsView: View {
                 .keyboardType(.numberPad)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
             
             
-        
             Text ("Sleep Mode Delay: ")
             TextField ("Enter Sleep Mode Delay (minutes)", value: $sleepmodedelay, formatter: NumberFormatter())
                 .keyboardType(.numberPad)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
+
             
             Button ("Apply") {
                 snoozeDuration = userinputMinutes * 60
                 sleepyTimeDelay = sleepmodedelay * 60
-                             }
+                
+            }
             .padding()
-            Spacer().frame(height: 200)
+            Spacer().frame(height: 30)
             
             Button(action: {
                 showingAlert = true
@@ -67,6 +66,8 @@ struct AlarmSettingsView: View {
                         )
                     }
             }
+        }.onTapGesture {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
     }
 }

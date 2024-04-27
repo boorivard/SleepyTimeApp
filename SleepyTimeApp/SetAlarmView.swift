@@ -25,7 +25,7 @@ struct SetAlarmView: View {
                             Text("\(latestAlarm, style: .time)")
                                 .font(.largeTitle)
                                 .foregroundColor(colorScheme == .dark ? .white : .black)
-                                .padding(15)
+                                .padding(5)
                                 
                              Text("                ") //space between the set alarm time and the "on/off" text
                                 .font(.headline)

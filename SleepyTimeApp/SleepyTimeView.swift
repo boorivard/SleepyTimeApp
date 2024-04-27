@@ -22,7 +22,7 @@ struct SleepModeView: View {
             
             VStack {
                 if(isAlarmOn){
-                    !isAlarmTriggered ? Text(alarmTime, style: .date)
+                    !isAlarmTriggered ? Text(alarmTime, style: .time)
                         .font(.system(size: 52))
                         .foregroundColor(.orange)
                         .padding() : nil
