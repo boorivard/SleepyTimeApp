@@ -45,12 +45,15 @@ struct AuthenticationView: View {
     @State var errorMessage: String = "Default_Message"
     var body: some View {
         VStack {
+            Text("SleepyTime App")
+                    .navigationTitle("SleepyTime App")
+                    .font(.headline)
             TextField("Email", text: $email)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
+                .padding(4)
             SecureField("Password", text: $password)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
+                .padding(4)
             Button(action: {
                 if isSignUp {
                     authViewModel.signUp(email: email, password: password) { error in
@@ -65,11 +68,13 @@ struct AuthenticationView: View {
                 Text(isSignUp ? "Sign Up" : "Sign In")
             }
             .padding()
+            .font(.system(size: 16))
             Button(action: {
                 isSignUp.toggle()
             }) {
                 Text(isSignUp ? "Already have an account? Sign in" : "Don't have an account? Sign up")
             }
+            .font(.system(size: 12))
         }
         .padding()
         .alert(isPresented: $showAlert) {

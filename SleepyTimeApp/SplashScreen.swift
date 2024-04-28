@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+
 struct SplashScreen: View {
     @State private var isActive = false
     @State private var scale: CGFloat = 0.8
@@ -20,9 +21,9 @@ struct SplashScreen: View {
                 ContentView(manager:manager)
                     .transition(.scale)
             } else {
-               LinearGradient(gradient: Gradient(colors: [Color.blue, Color.black]), startPoint: .top, endPoint: .bottom)
+                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.black]), startPoint: .top, endPoint: .bottom)
                     .ignoresSafeArea()
-                                   
+                
                 VStack {
                     Image("logo")  //logo is the sleepytime logo in assets
                         .resizable()
@@ -33,19 +34,19 @@ struct SplashScreen: View {
                         .shadow(color: .black, radius: 5, x: 0, y: 5)
                 }
                 
-               .scaleEffect(scale)
-               .transition(.scale)
+                .scaleEffect(scale)
+                .transition(.scale)
                 .onAppear {
                     withAnimation(.easeInOut(duration: 3)) {
                         scale = 1
                         systemImageOpacity = 1
-                   }
+                    }
                 }
             }
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    isActive = true
+                isActive = true
             }
         }
     }

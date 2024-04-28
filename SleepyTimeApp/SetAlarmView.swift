@@ -56,7 +56,7 @@ struct SetAlarmView: View {
                                 .padding()
                         }
                         .frame(maxWidth: .infinity)
-                        .background(Color.green)
+                        .background(Color.blue)
                         .cornerRadius(10)
                     }
                     .padding(.horizontal, 20)
@@ -99,7 +99,7 @@ struct SetAlarmView: View {
                                 .padding()
                         }
                         .frame(maxWidth: .infinity)
-                        .background(Color.green)
+                        .background(Color.blue)
                         .cornerRadius(10)
                     }
                     .padding(.horizontal, 20)

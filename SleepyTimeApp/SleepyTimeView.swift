@@ -16,6 +16,7 @@ struct SleepModeView: View {
         @Binding var isAlarmOn: Bool
         @Binding var snoozeDuration: TimeInterval
         @Binding var sleepytimeTimer: Timer?
+        @Binding var sleepyTimeDelay: TimeInterval
         @State private var isAlarmTriggered = false
         @ObservedObject var manager: StatisticsManager
         var body: some View {
@@ -24,12 +25,12 @@ struct SleepModeView: View {
                 if(isAlarmOn){
                     !isAlarmTriggered ? Text(alarmTime, style: .time)
                         .font(.system(size: 52))
-                        .foregroundColor(.orange)
+                        .foregroundColor(.blue)
                         .padding() : nil
                 }else{
                     Text("Alarm is Off")
                         .font(.system(size: 52))
-                        .foregroundColor(.orange)
+                        .foregroundColor(.blue)
                         .padding()
                 }
                 
@@ -42,7 +43,7 @@ struct SleepModeView: View {
                         .padding()
                 }
                 .frame(maxWidth: .infinity)
-                .background(Color.orange)
+                .background(Color.blue)
                 .cornerRadius(10)
                 .padding(.horizontal, 20) : nil
                 if(isAlarmTriggered){
@@ -54,6 +55,9 @@ struct SleepModeView: View {
                     if(isAlarmOn){
                         alarmStarts()
                     }
+                DispatchQueue.main.asyncAfter(deadline: .now() + sleepyTimeDelay) {
+                    manager.statistics.startTime = Date()
+            }
             }
             
         }

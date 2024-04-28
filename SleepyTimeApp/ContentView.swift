@@ -25,10 +25,6 @@ struct ContentView: View {
                SetAlarmView(alarmTime: $alarmTime, isAlarmOn: $isAlarmOn)
                 Button(action: {
                     isSleepModeActive.toggle() // Toggle sleep mode
-                    DispatchQueue.main.asyncAfter(deadline: .now() + sleepyTimeDelay) {
-                        manager.statistics.startTime = Date()
-                }
-
                 }) {
                     Text("Enter Sleep Mode")
                         .font(.headline)
@@ -36,11 +32,11 @@ struct ContentView: View {
                         .padding()
                 }
                 .frame(maxWidth: .infinity)
-                .background(Color.orange)
+                .background(Color.cyan)
                 .cornerRadius(10)
                 .padding(.horizontal, 20)
                 .sheet(isPresented: $isSleepModeActive) {
-                    SleepModeView(isSleepModeActive: $isSleepModeActive, alarmTime: $alarmTime, isAlarmOn: $isAlarmOn, snoozeDuration: $snoozeDuration, sleepytimeTimer: $sleepytimeTimer, manager:manager)
+                    SleepModeView(isSleepModeActive: $isSleepModeActive, alarmTime: $alarmTime, isAlarmOn: $isAlarmOn, snoozeDuration: $snoozeDuration, sleepytimeTimer: $sleepytimeTimer, sleepyTimeDelay: $sleepyTimeDelay, manager:manager)
                 }
             }
             .tabItem {

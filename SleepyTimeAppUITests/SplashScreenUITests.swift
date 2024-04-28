@@ -1,14 +1,17 @@
 //
-//  SleepyTimeAppUITests.swift
+//  SplashScreenUITests.swift
 //  SleepyTimeAppUITests
 //
-//  Created by Jared Rivard on 2/18/24.
+//  Created by Jared Rivard on 4/28/24.
 //
 
 import XCTest
+@testable import SleepyTimeApp
+import FirebaseFirestoreInternal
 
-final class SleepyTimeAppUITests: XCTestCase {
-
+final class SplashScreenUITests: XCTestCase {
+    var app: XCUIApplication!
+    
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
@@ -38,4 +41,13 @@ final class SleepyTimeAppUITests: XCTestCase {
             }
         }
     }
+    
+    func testSplashScreenTransition() {
+            // Test that the splash screen transitions to ContentView when isActive is true
+            app.launchArguments.append("-isActive") // Set the launch argument to simulate isActive being true
+            app.launch()
+
+            let contentView = app.otherElements["ContentView"]
+            XCTAssertTrue(contentView.exists, "ContentView should be displayed")
+        }
 }

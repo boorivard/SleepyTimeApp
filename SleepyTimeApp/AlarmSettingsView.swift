@@ -13,10 +13,8 @@ import FirebaseAuth
 struct AlarmSettingsView: View {
     @Binding var snoozeDuration: TimeInterval
     @Binding var sleepyTimeDelay: TimeInterval
-    @State private var selectedDelay: TimeInterval = 5
-    //defaulted sleepytime mode delay to 5 minutes
     @Binding var sleepytimeTimer: Timer?
-    @State private var userinputMinutes: Double = 0
+    @State private var userinputMinutes: Double = 5
     @State private var sleepmodedelay: TimeInterval = 10
     @State private var showingAlert = false
     
@@ -27,13 +25,17 @@ struct AlarmSettingsView: View {
                 .keyboardType(.numberPad)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-            
+                .padding(.horizontal, 40)
             
             Text ("Sleep Mode Delay: ")
+                .padding(.top, 20)
             TextField ("Enter Sleep Mode Delay (minutes)", value: $sleepmodedelay, formatter: NumberFormatter())
                 .keyboardType(.numberPad)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(.horizontal, 40)
+                .padding(.bottom, 40)
+                
 
             
             Button ("Apply") {
@@ -41,8 +43,12 @@ struct AlarmSettingsView: View {
                 sleepyTimeDelay = sleepmodedelay * 60
                 
             }
+            .foregroundColor(.white)
             .padding()
-            Spacer().frame(height: 30)
+            .background(Color.blue)
+            .cornerRadius(10)
+            .padding(.horizontal, 20)
+            Spacer().frame(height: 120)
             
             Button(action: {
                 showingAlert = true
@@ -50,6 +56,7 @@ struct AlarmSettingsView: View {
                 Text("Log Out")
                     .font(.system(size: 15))
                     .padding()
+                    .foregroundColor(.red)
                     .alert(isPresented: $showingAlert) {
                         Alert(
                             title: Text("Are you sure you want to log out?"),

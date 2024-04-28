@@ -14,10 +14,11 @@
 		D9152FE32B82AD5600BBD8FC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FE22B82AD5600BBD8FC /* ContentView.swift */; };
 		D9152FE52B82AD5900BBD8FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9152FE42B82AD5900BBD8FC /* Assets.xcassets */; };
 		D9152FE82B82AD5900BBD8FC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9152FE72B82AD5900BBD8FC /* Preview Assets.xcassets */; };
-		D9152FF22B82AD5A00BBD8FC /* SleepyTimeAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FF12B82AD5A00BBD8FC /* SleepyTimeAppTests.swift */; };
-		D9152FFC2B82AD5A00BBD8FC /* SleepyTimeAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FFB2B82AD5A00BBD8FC /* SleepyTimeAppUITests.swift */; };
-		D9152FFE2B82AD5A00BBD8FC /* SleepyTimeAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9152FFD2B82AD5A00BBD8FC /* SleepyTimeAppUITestsLaunchTests.swift */; };
 		D968CD652BDB1B46008ABCD4 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = D968CD642BDB1B46008ABCD4 /* Database.swift */; };
+		D968CD6A2BDE4298008ABCD4 /* SplashScreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D968CD692BDE4298008ABCD4 /* SplashScreenUITests.swift */; };
+		D968CD6D2BDE43C5008ABCD4 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D968CD6C2BDE43C5008ABCD4 /* FirebaseFirestore */; };
+		D968CD6F2BDE43CC008ABCD4 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D968CD6E2BDE43CC008ABCD4 /* FirebaseAuth */; };
+		D968CD712BDE45CA008ABCD4 /* BasicUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D968CD702BDE45CA008ABCD4 /* BasicUnitTest.swift */; };
 		D9A4CAEA2BA7BA8A0071B9D9 /* SleepyTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4CAE92BA7BA8A0071B9D9 /* SleepyTimeView.swift */; };
 		D9A4CAEC2BA7BB560071B9D9 /* SleepLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4CAEB2BA7BB560071B9D9 /* SleepLogView.swift */; };
 		D9A4CAF22BA7BD190071B9D9 /* SetAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A4CAF12BA7BD190071B9D9 /* SetAlarmView.swift */; };
@@ -64,11 +65,11 @@
 		D9152FE42B82AD5900BBD8FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D9152FE72B82AD5900BBD8FC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D9152FED2B82AD5A00BBD8FC /* SleepyTimeAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SleepyTimeAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D9152FF12B82AD5A00BBD8FC /* SleepyTimeAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepyTimeAppTests.swift; sourceTree = "<group>"; };
 		D9152FF72B82AD5A00BBD8FC /* SleepyTimeAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SleepyTimeAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D9152FFB2B82AD5A00BBD8FC /* SleepyTimeAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepyTimeAppUITests.swift; sourceTree = "<group>"; };
-		D9152FFD2B82AD5A00BBD8FC /* SleepyTimeAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepyTimeAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D968CD642BDB1B46008ABCD4 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		D968CD682BDE4297008ABCD4 /* SleepyTimeAppUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SleepyTimeAppUITests-Bridging-Header.h"; sourceTree = "<group>"; };
+		D968CD692BDE4298008ABCD4 /* SplashScreenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenUITests.swift; sourceTree = "<group>"; };
+		D968CD702BDE45CA008ABCD4 /* BasicUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicUnitTest.swift; sourceTree = "<group>"; };
 		D9A4CAE92BA7BA8A0071B9D9 /* SleepyTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepyTimeView.swift; sourceTree = "<group>"; };
 		D9A4CAEB2BA7BB560071B9D9 /* SleepLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepLogView.swift; sourceTree = "<group>"; };
 		D9A4CAF12BA7BD190071B9D9 /* SetAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAlarmView.swift; sourceTree = "<group>"; };
@@ -105,6 +106,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D968CD6D2BDE43C5008ABCD4 /* FirebaseFirestore in Frameworks */,
+				D968CD6F2BDE43CC008ABCD4 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +122,7 @@
 				D9152FF02B82AD5A00BBD8FC /* SleepyTimeAppTests */,
 				D9152FFA2B82AD5A00BBD8FC /* SleepyTimeAppUITests */,
 				D9152FDE2B82AD5600BBD8FC /* Products */,
+				D968CD6B2BDE43C5008ABCD4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -166,7 +170,7 @@
 		D9152FF02B82AD5A00BBD8FC /* SleepyTimeAppTests */ = {
 			isa = PBXGroup;
 			children = (
-				D9152FF12B82AD5A00BBD8FC /* SleepyTimeAppTests.swift */,
+				D968CD702BDE45CA008ABCD4 /* BasicUnitTest.swift */,
 			);
 			path = SleepyTimeAppTests;
 			sourceTree = "<group>";
@@ -174,10 +178,17 @@
 		D9152FFA2B82AD5A00BBD8FC /* SleepyTimeAppUITests */ = {
 			isa = PBXGroup;
 			children = (
-				D9152FFB2B82AD5A00BBD8FC /* SleepyTimeAppUITests.swift */,
-				D9152FFD2B82AD5A00BBD8FC /* SleepyTimeAppUITestsLaunchTests.swift */,
+				D968CD692BDE4298008ABCD4 /* SplashScreenUITests.swift */,
+				D968CD682BDE4297008ABCD4 /* SleepyTimeAppUITests-Bridging-Header.h */,
 			);
 			path = SleepyTimeAppUITests;
+			sourceTree = "<group>";
+		};
+		D968CD6B2BDE43C5008ABCD4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		D9E84E342B9FFAA1006591B6 /* Sounds */ = {
@@ -248,6 +259,10 @@
 				D9152FF92B82AD5A00BBD8FC /* PBXTargetDependency */,
 			);
 			name = SleepyTimeAppUITests;
+			packageProductDependencies = (
+				D968CD6C2BDE43C5008ABCD4 /* FirebaseFirestore */,
+				D968CD6E2BDE43CC008ABCD4 /* FirebaseAuth */,
+			);
 			productName = SleepyTimeAppUITests;
 			productReference = D9152FF72B82AD5A00BBD8FC /* SleepyTimeAppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -267,10 +282,12 @@
 					};
 					D9152FEC2B82AD5A00BBD8FC = {
 						CreatedOnToolsVersion = 15.2;
+						LastSwiftMigration = 1530;
 						TestTargetID = D9152FDC2B82AD5600BBD8FC;
 					};
 					D9152FF62B82AD5A00BBD8FC = {
 						CreatedOnToolsVersion = 15.2;
+						LastSwiftMigration = 1530;
 						TestTargetID = D9152FDC2B82AD5600BBD8FC;
 					};
 				};
@@ -353,7 +370,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9152FF22B82AD5A00BBD8FC /* SleepyTimeAppTests.swift in Sources */,
+				D968CD712BDE45CA008ABCD4 /* BasicUnitTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,8 +378,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9152FFC2B82AD5A00BBD8FC /* SleepyTimeAppUITests.swift in Sources */,
-				D9152FFE2B82AD5A00BBD8FC /* SleepyTimeAppUITestsLaunchTests.swift in Sources */,
+				D968CD6A2BDE4298008ABCD4 /* SplashScreenUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -564,6 +580,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -572,6 +589,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = SleepyTime.SleepyTimeAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SleepyTimeApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SleepyTimeApp";
@@ -583,6 +601,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -601,6 +620,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -608,6 +628,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = SleepyTime.SleepyTimeAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "SleepyTimeAppUITests/SleepyTimeAppUITests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = SleepyTimeApp;
@@ -618,6 +640,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -625,6 +648,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = SleepyTime.SleepyTimeAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "SleepyTimeAppUITests/SleepyTimeAppUITests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = SleepyTimeApp;
@@ -684,6 +708,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D968CD6C2BDE43C5008ABCD4 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9A4CAF32BB3320B0071B9D9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		D968CD6E2BDE43CC008ABCD4 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9A4CAF32BB3320B0071B9D9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
 		D9A4CAF42BB3320B0071B9D9 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D9A4CAF32BB3320B0071B9D9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

@@ -33,7 +33,7 @@ struct AlarmView: View {
                     Text("Snooze")
                         .font(.system(size: 50))
                         .padding()
-                        .background(Color.green)
+                        .background(Color.blue)
                         .foregroundColor(.white)
                         .cornerRadius(100)
                 }
