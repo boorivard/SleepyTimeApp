@@ -1,0 +1,246 @@
+import XCTest
+@testable import SleepyTimeApp
+
+class AuthViewModelTests: XCTestCase {
+
+    var authViewModel: AuthViewModel!
+    var mockAuth: MockAuth!
+
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+        authViewModel = AuthViewModel()
+        mockAuth = MockAuth()
+    }
+
+    override func tearDownWithError() throws {
+        authViewModel = nil
+        mockAuth = nil
+        try super.tearDownWithError()
+    }
+
+    func testSignIn() throws {
+        // Assign the mock auth service
+        authViewModel.authService = mockAuth
+
+        let expectation = XCTestExpectation(description: "Sign in completion called")
+
+        // Perform sign in
+        authViewModel.signIn(email: "test@example.com", password: "password123") { error in
+            XCTAssertNil(error, "Sign in should succeed")
+            expectation.fulfill()
+        }
+
+        // Wait for the expectation
+        wait(for: [expectation], timeout: 5.0)
+
+        // Verify if the signIn function of mockAuth was called with correct parameters
+        XCTAssertTrue(mockAuth.signInCalled)
+        XCTAssertEqual(mockAuth.email, "test@example.com")
+        XCTAssertEqual(mockAuth.password, "password123")
+    }
+
+    // Similarly, write test cases for signUp, signOut, and listenForAuthChanges functions
+}
+
+
+// authentication unit tests
+class MockAuth: AuthService {
+    var signInCalled = false
+    var signUpCalled = false
+    var signOutCalled = false
+    var listenForAuthChangesCalled = false
+
+    var email: String?
+    var password: String?
+
+    func signIn(withEmail email: String, password: String, completion: @escaping (Error?) -> Void) {
+        signInCalled = true
+        self.email = email
+        self.password = password
+        // Mock sign in success
+        completion(nil)
+    }
+
+    func signUp(withEmail email: String, password: String, completion: @escaping (Error?) -> Void) {
+        signUpCalled = true
+        self.email = email
+        self.password = password
+        // Mock sign up success
+        completion(nil)
+    }
+
+    func signOut() {
+        signOutCalled = true
+        // Mock sign out success
+    }
+
+    func addStateDidChangeListener(_ listener: @escaping AuthStateDidChangeListenerBlock) -> AuthStateDidChangeListenerHandle {
+        listenForAuthChangesCalled = true
+        // Mock listener added
+        return AuthStateDidChangeListenerHandle()
+    }
+}
+
+protocol AuthService {
+    func signIn(withEmail email: String, password: String, completion: @escaping (Error?) -> Void)
+    func signUp(withEmail email: String, password: String, completion: @escaping (Error?) -> Void)
+    func signOut()
+    func addStateDidChangeListener(_ listener: @escaping AuthStateDidChangeListenerBlock) -> AuthStateDidChangeListenerHandle
+}
+
+// Db unit tests
+class DatabaseTests: XCTestCase {
+
+    var mockAuth: MockAuth!
+    var mockFirestore: MockFirestore!
+    var database: Database!
+
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+        mockAuth = MockAuth()
+        mockFirestore = MockFirestore()
+        database = Database()
+    }
+
+    override func tearDownWithError() throws {
+        mockAuth = nil
+        mockFirestore = nil
+        database = nil
+        try super.tearDownWithError()
+    }
+
+    func testInitDB_CollectionExists() throws {
+        // Assign the mock auth and firestore services
+        database.auth = mockAuth
+        database.firestore = mockFirestore
+
+        // Mock user is signed in
+        mockAuth.currentUser = MockUser(uid: "testUserID")
+
+        // Mock collection already exists
+        mockFirestore.mockSnapshot = MockDocumentSnapshot(exists: true)
+
+        database.initDB()
+
+        // Verify if collection was checked and already exists
+        XCTAssertTrue(mockFirestore.collectionRefExistsCalled)
+        XCTAssertEqual(mockFirestore.collectionName, "testUserID")
+        XCTAssertTrue(mockFirestore.getDocumentsCalled)
+        XCTAssertFalse(mockFirestore.addDocumentCalled)
+    }
+
+    func testInitDB_CollectionDoesNotExist() throws {
+        // Assign the mock auth and firestore services
+        database.auth = mockAuth
+        database.firestore = mockFirestore
+
+        // Mock user is signed in
+        mockAuth.currentUser = MockUser(uid: "testUserID")
+
+        // Mock collection does not exist
+        mockFirestore.mockSnapshot = MockDocumentSnapshot(exists: false)
+
+        database.initDB()
+
+        // Verify if collection was checked and created
+        XCTAssertTrue(mockFirestore.collectionRefExistsCalled)
+        XCTAssertEqual(mockFirestore.collectionName, "testUserID")
+        XCTAssertTrue(mockFirestore.getDocumentsCalled)
+        XCTAssertTrue(mockFirestore.addDocumentCalled)
+    }
+}
+
+class MockAuth: Auth {
+    var currentUser: User?
+
+    override func currentUser() -> User? {
+        return currentUser
+    }
+}
+
+class MockFirestore: Firestore {
+    var mockSnapshot: MockDocumentSnapshot?
+    var collectionRefExistsCalled = false
+    var getDocumentsCalled = false
+    var addDocumentCalled = false
+    var collectionName: String?
+
+    override func collection(_ collectionPath: String) -> CollectionReference {
+        collectionName = collectionPath
+        return MockCollectionReference(mockSnapshot: mockSnapshot)
+    }
+}
+
+class MockCollectionReference: CollectionReference {
+    let mockSnapshot: MockDocumentSnapshot
+
+    init(mockSnapshot: MockDocumentSnapshot) {
+        self.mockSnapshot = mockSnapshot
+    }
+
+    override func getDocuments(completion: @escaping FIRQuerySnapshotBlock) {
+        getDocumentsCalled = true
+        completion(mockSnapshot, nil)
+    }
+
+    override func addDocument(_ data: [String: Any], completion: @escaping FIRDocumentReferenceBlock) -> FIRDocumentReference {
+        addDocumentCalled = true
+        completion(MockDocumentReference(), nil)
+        return MockDocumentReference()
+    }
+}
+
+class MockDocumentSnapshot: QuerySnapshot {
+    let exists: Bool
+
+    init(exists: Bool) {
+        self.exists = exists
+    }
+}
+
+class MockDocumentReference: DocumentReference {
+}
+
+class MockUser: User {
+}
+
+
+func testSignUp_Success() throws {
+    database.auth = mockAuth
+
+    let expectation = XCTestExpectation(description: "Sign up completion called")
+
+    database.signUp(email: "test@example.com", password: "password123") { error in
+        XCTAssertNil(error, "Sign up should succeed")
+        expectation.fulfill()
+    }
+
+    wait(for: [expectation], timeout: 5.0)
+
+    XCTAssertTrue(mockAuth.signUpCalled)
+    XCTAssertEqual(mockAuth.email, "test@example.com")
+    XCTAssertEqual(mockAuth.password, "password123")
+}
+
+func testSignOut_Success() throws {
+    database.auth = mockAuth
+
+    database.signOut()
+
+    XCTAssertTrue(mockAuth.signOutCalled)
+}
+
+func testListenForAuthChanges() throws {
+    database.auth = mockAuth
+
+    let expectation = XCTestExpectation(description: "Listen for auth changes completion called")
+
+    database.listenForAuthChanges { isLoggedIn in
+        XCTAssertFalse(isLoggedIn, "User should not be logged in")
+        expectation.fulfill()
+    }
+
+    wait(for: [expectation], timeout: 5.0)
+
+    XCTAssertTrue(mockAuth.addStateDidChangeListenerCalled)
+}
